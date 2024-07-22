@@ -18,3 +18,6 @@ app.get("*", (req, res) => {
 
 connectDB();
 
+app.listen(5500, () => {
+    console.log(`Server is running on port ${port}`);
+  });
