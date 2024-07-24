@@ -15,4 +15,5 @@ const savedTweetSchema = mongoose.Schema({
   },
 });
 
-export default SavedTweet = mongoose.model("savedTweet", savedTweetSchema);
+const SavedTweet = mongoose.model("savedTweet", savedTweetSchema);
+export default SavedTweet;

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const notificationSchema = mongoose.Schema({
   user_id: {
-    type: Date,
+    type: String,
     required: true,
   },
   created_at: {
@@ -15,19 +15,23 @@ const notificationSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["like", "retweet", "follow"],
+    enum: ["like", "retweet", "follow","comment","quote"],
+    required: true,
+
   },
-  source_user: {
+  by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
+    required: true,
+
   },
+  
   tweet: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "tweet",
   },
 });
 
-export default Notification = mongoose.model(
-  "notification",
-  notificationSchema
-);
+const Notification = mongoose.model("notification", notificationSchema);
+
+export default Notification;

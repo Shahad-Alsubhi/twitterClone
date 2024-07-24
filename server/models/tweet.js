@@ -8,6 +8,7 @@ const tweetSchema = mongoose.Schema({
   created_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
+    required: true,
   },
   content_text: {
     type: String,
@@ -18,6 +19,7 @@ const tweetSchema = mongoose.Schema({
   type: {
     type: String,
     enum: ["comment", "quote", "tweet"],
+    required: true,
   },
   parent_tweet: {
     type: mongoose.Schema.Types.ObjectId,
@@ -25,4 +27,5 @@ const tweetSchema = mongoose.Schema({
   },
 });
 
-export default Tweet = mongoose.model("tweet", tweetSchema);
+const Tweet = mongoose.model("tweet", tweetSchema);
+export default Tweet;

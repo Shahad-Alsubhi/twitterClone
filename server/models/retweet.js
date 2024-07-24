@@ -15,4 +15,5 @@ const retweetSchema = mongoose.Schema({
   },
 });
 
-export default Retweet = mongoose.model("retweet", retweetSchema);
+const Retweet = mongoose.model("retweet", retweetSchema);
+export default Retweet;

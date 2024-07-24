@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
   },
   username: {
     type: String,
+    required: true,
   },
   joined_at: {
     required: true,
@@ -18,6 +19,7 @@ const userSchema = mongoose.Schema({
   },
   name: {
     type: String,
+    required: true,
   },
   bio: {
     type: String,
@@ -25,12 +27,13 @@ const userSchema = mongoose.Schema({
 
   header_picture_url: {
     type: String,
-    // default
   },
   profile_picture_url: {
     type: String,
-    // default
+    default:
+      "https://res.cloudinary.com/deqnekemi/image/upload/v1721735371/User-Profile-PNG-Clipart_gb6vgf.png",
   },
 });
 
-export default User = mongoose.model("user", userSchema);
+const User = mongoose.model("user", userSchema);
+export default User;

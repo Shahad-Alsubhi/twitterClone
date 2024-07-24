@@ -15,4 +15,5 @@ const likeSchema = mongoose.Schema({
   },
 });
 
-export default Like = mongoose.model("retweet", likeSchema);
+const Like = mongoose.model("like", likeSchema);
+export default Like;
