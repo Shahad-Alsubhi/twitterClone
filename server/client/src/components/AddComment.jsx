@@ -15,9 +15,10 @@ const AddComment = () => {
             <form className="card-body p-0 w-[90%] pt-8 min-h-56 ">
             <TweetContent newReply={true}/>
 
-            <div className='flex items-center gap-3 mb-8 p-4 pt-0'>
+            <div className='flex items-center gap-3 mb-8 p-4 pt-0 pl-0'>
               <Avatar/>
-            <input type="text" placeholder="Post your reply" className="input max-w-full text-lg font-extralight  border-none outline-none h-full bg-transparent focus:border-none" />
+            <textarea  placeholder="Post your reply" rows="5" type="text" className="input w-full text-lg font-extralight  border-none outline-none placeholder:text-base  bg-transparent focus:border-none mt-5"  >
+              </textarea>
             </div>
               <div className="form-control flex-row justify-end">
                 <button className="btn items-end btn-primary bg-custom-blue rounded-full hover:bg-custom-blue outline-none min-h-0 h-10 mt-2 w-fit ">Reply</button>

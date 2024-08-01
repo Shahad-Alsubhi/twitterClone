@@ -27,7 +27,7 @@ const createTweet = async (req, res) => {
           created_at: Date.now(),
           created_by: req.user,
           content_text: content_text ? content_text : "",
-          content_images_urls: content_images_urls ? content_images_urls : null,
+          content_images_urls: content_images_urls ? content_images_urls : [],
           type,
           parent_tweet,
         });

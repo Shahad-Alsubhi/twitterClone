@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import logoWhight from "../assets/logoWhite.png";
-
+import {useForm} from 'react-hook-form'
+import UserController from '../controllers/userController'
 
 export default function Login(){
+  const {register,handleSubmit,formState:{errors}}=useForm()
+  const {handleLogin,errorMessage}=UserController()
+
+
     return(
         <dialog id="Login_form" className="modal max-sm:bg-black bg-[#5b708366]">
   <div className="modal-box  bg-black  ">
@@ -16,21 +21,24 @@ export default function Login(){
       <form className="card-body p-0 pt-6">
         <div className="form-control">
 <h1 className="text-2xl font-extrabold mb-5">Sign in to X
-  </h1>        
+  </h1>  
+  {errorMessage && <h4 className="m-1 text-[#e25858]">{errorMessage}</h4>}      
     <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input  placeholder="enter your email" className="input input-bordered bg-transparent text-xs focus:outline-custom-blue focus:rounded-lg duration-[0.2s]"  />
+          <input placeholder="enter your email" className="input input-bordered bg-transparent text-xs focus:outline-custom-blue focus:rounded-lg duration-[0.2s]" {...register("email",{required:"email is required"})} />
+          <p className="mt-1 text-[#e25858]">{errors.email?.message}</p>
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text ">Password</span>
           </label>
-          <input type="password" placeholder="enter your password" className="input input-bordered bg-transparent text-xs focus:outline-custom-blue focus:rounded-lg duration-[0.2s]"  />
-         
+          <input type="password" placeholder="enter your password" className="input input-bordered bg-transparent text-xs focus:outline-custom-blue focus:rounded-lg duration-[0.2s]"  {...register("password",{required:"password is required"})} />
+          <p className="mt-1 text-[#e25858]">{errors.password?.message}</p>
+
         </div>
         <div className="form-control mt-6">
-          <button className="btn btn-primary bg-slate-50 rounded-full	outline-none	min-h-0  h-10 hover:bg-slate-100 mb-3 ">Login</button>
+          <input type="submit" onClick={handleSubmit(handleLogin)} className="btn btn-primary bg-slate-50 rounded-full	outline-none	min-h-0  h-10 hover:bg-slate-100 mb-3 " value={"Login"}/>
           <button className="btn btn-primary bg-slate-50 rounded-full	outline-none bg-transparent text-slate-50 border-custom-gray min-h-0  h-10 hover:bg-gray-700/40 hover:border-custom-gray duration-[0.2s]">Forgot password?</button>
 
         </div>

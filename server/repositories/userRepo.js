@@ -20,7 +20,7 @@ const signUp = async (req, res) => {
     await newUser.save();
 
     const token = jwt.sign({ userId: newUser._id }, process.env.SECRET, {
-      expiresIn: "1d",
+      expiresIn: "10h",
     });
 
     return res.status(200).json({ message: "successful signup", token });

@@ -12,8 +12,8 @@ const CreateTweet = () => {
       
         <form className="card-body p-0 w-4/5 pt-8 min-h-56 justify-between">
        
-        <input type="text" placeholder="What is happening?!" className="input max-w-full text-2xl font-extralight  border-none outline-none h-full bg-transparent focus:border-none" />
-
+        <textarea type="text" placeholder="What is happening?!" className="input max-w-full text-2xl font-extralight placeholder:text-lg border-none outline-none h-full bg-transparent focus:border-none" />
+           
           <div className="form-control flex-row justify-end">
             <button className="btn items-end btn-primary bg-custom-blue rounded-full hover:bg-custom-blue outline-none min-h-0 h-10 mt-2 w-fit ">Post</button>
   

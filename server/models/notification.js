@@ -7,7 +7,7 @@ const notificationSchema = mongoose.Schema({
   },
   created_at: {
     type: Date,
-    required: true,
+    required: true,// 
   },
   read: {
     type: Boolean,

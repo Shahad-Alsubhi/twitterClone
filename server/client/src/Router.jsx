@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import  WellcomePage  from "./pages/WellcomePage";
 import HomePage from "./pages/HomePage";
-import TweetsContainer from "./components/TweetsContainer";
+import TweetsContainer from "./pages/TweetsContainer";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import IndividualTweet from "./pages/IndividualTweet";

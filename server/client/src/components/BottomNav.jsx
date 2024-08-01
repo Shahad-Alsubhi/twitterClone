@@ -1,6 +1,4 @@
-import {ThemeProvider, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import SearchIcon from '@mui/icons-material/Search';
@@ -14,16 +12,15 @@ import Avatar from './Avatar';
 import QuillPen from './QuillPen';
 import CreateTweet from './CreateTweetDialog'
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
 
 
     export default function BottomNav() {
-      const theme = useTheme();
-      const matches = useMediaQuery(theme.breakpoints.up('lg'));
+      const matches = useMediaQuery('(min-width:1200px)');
       console.log(matches)
        const [value, setValue] = useState(0);
     
       return (
-        <ThemeProvider theme={theme}>
 
         <Box className="w-full min-w-20 flex flex-col  min-[500px]:w-16  h-[3.2rem] max-[500px]:border-t-[1px] border-custom-border-color fixed bottom-0 min-[500px]:left-0  min-[500px]:static min-[500px]:h-screen " sx={{'@media (min-width:1200px)':{width:"180px"}}} >
            
@@ -62,7 +59,6 @@ import { Link } from 'react-router-dom';
           </div>
           <CreateTweet/>
         </Box>
-        </ThemeProvider >
 
       );
     }
