@@ -11,7 +11,7 @@ const navigate=useNavigate()
 
 
 const handleLogin=(data)=>{
-    fetch("/users/login",{
+    fetch("/users/user/login",{
         method:"post",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
