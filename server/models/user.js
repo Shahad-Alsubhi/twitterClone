@@ -30,8 +30,7 @@ const userSchema = mongoose.Schema({
   },
   profile_picture_url: {
     type: String,
-    default:
-      "https://res.cloudinary.com/deqnekemi/image/upload/v1721735371/User-Profile-PNG-Clipart_gb6vgf.png",
+   
   },
 });
 
