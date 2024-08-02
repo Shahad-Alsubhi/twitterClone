@@ -6,7 +6,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
-import { useState } from 'react';
+import {  useState } from 'react';
 import LogoWhite from '../assets/logoWhite.png'
 import Avatar from './Avatar';
 import QuillPen from './QuillPen';
@@ -15,9 +15,10 @@ import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 
 
+
     export default function BottomNav() {
+
       const matches = useMediaQuery('(min-width:1200px)');
-      console.log(matches)
        const [value, setValue] = useState(0);
     
       return (
@@ -50,7 +51,11 @@ import Box from '@mui/material/Box';
           <div className='flex flex-col justify-between h-full items-center pb-6 mt-10  max-[500px]:hidden -ml-2'>
           <QuillPen />
           <div className='flex flex-row gap-4 items-center'>
-          <Avatar />
+
+
+
+
+          <Avatar/>
           <div className="max-xl:hidden">
 <h1 className='font-bold'>Lorem ipsum</h1>
 <h5 className='text-custom-gray'>@Lorem987</h5>

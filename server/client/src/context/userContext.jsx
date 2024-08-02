@@ -10,9 +10,10 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider value={{setUser,user}}>
         {children}
     </UserContext.Provider>
-
       
   )
+
 }
+
 
 export default UserProvider

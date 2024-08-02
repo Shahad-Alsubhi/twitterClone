@@ -17,7 +17,7 @@ import {
 
 router.post("/create-tweet", requireLogin, createTweet);
 
-router.get("/tweets", getAllTweets);
+router.get("/", getAllTweets);
 
 router.get("/following-tweets", requireLogin, getFollowingTweets);
 

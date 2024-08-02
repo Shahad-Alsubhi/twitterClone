@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Notification from "../models/notification.js";
 import Follow from "../models/followes.js";
+import nodemailer from "nodemailer";
 
 const signUp = async (req, res) => {
   try {
@@ -18,7 +19,7 @@ const signUp = async (req, res) => {
     const hashedpassword = await bcrypt.hash(newUser.password, salt);
     newUser.password = hashedpassword;
     await newUser.save();
-
+  
     const token = jwt.sign({ userId: newUser._id }, process.env.SECRET, {
       expiresIn: "10h",
     });
@@ -50,7 +51,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "email/password incorrect" });
     }
   } catch (e) {
-    console.error("Signup error:", e);
+    console.error("login error:", e);
 
     return res
       .status(500)
@@ -87,29 +88,97 @@ const isUsernameAvailable = async (username) => {
   }
 };
 
-const resetPassword = async (req, res) => {
+// const resetPassword = async (req, res) => {
+//   try {
+//     const email = req.user.email;
+
+//     const userRecord = await User.findOne({ email });
+
+//     if (userRecord != null) {
+//       if (await bcrypt.compare(req.body.pre_password, userRecord.password)) {
+//         const salt = await bcrypt.genSalt(12);
+//         const hashedpassword = await bcrypt.hash(req.body.newPassword, salt);
+//         userRecord.password = hashedpassword;
+//         userRecord.save();
+
+//         return res
+//           .status(200)
+//           .json({ message: "password changed successfully" });
+//       } else {
+//         return res.status(400).json({ message: "previous password incorrect" });
+//       }
+//     } else {
+//       throw new Error("could not find user");
+//     }
+//   } catch (e) {
+//     console.error("reset password error:", e);
+//     return res
+//       .status(500)
+//       .json({ message: "reset password failed. Please try again later." });
+//   }
+// };
+
+const forgotPassword = async (req, res) => {
   try {
-    const email = req.user.email;
+    const { email } = req.body;
 
     const userRecord = await User.findOne({ email });
-    console.log(userRecord);
 
     if (userRecord != null) {
-      if (await bcrypt.compare(req.body.pre_password, userRecord.password)) {
-        const salt = await bcrypt.genSalt(12);
-        const hashedpassword = await bcrypt.hash(req.body.newPassword, salt);
-        userRecord.password = hashedpassword;
-        userRecord.save();
+      const token = jwt.sign({ userId: userRecord._id }, process.env.SECRET, {
+        expiresIn: "10m",
+      });
+      var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "twitterclone.2024@gmail.com",
+          pass: process.env.Email_PASSWORD,
+        },
+      });
 
-        return res
-          .status(200)
-          .json({ message: "password changed successfully" });
-      } else {
-        return res.status(400).json({ message: "previous password incorrect" });
-      }
+      var mailOptions = {
+        from: "twitterclone.2024@gmail.com",
+        to: email,
+        subject: "Reset your password",
+        text: `Please click this link to reset your password. \n \n http://localhost:5173/reset-password/${token}`,
+      };
+
+      await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          return res
+            .status(500)
+            .json({
+              message: "reset password failed. Please try again later.",
+            });
+        } else {
+          return res.status(200).json({
+            message:
+              "A password reset link has been sent to your email address successfully",
+          });
+        }
+      });
     } else {
-      throw new Error("could not find user");
+      return res.status(400).json({
+        message:
+          "we couldn't find an account associated with that email address",
+      });
     }
+  } catch (e) {
+    console.error("reset password error:", e);
+    return res
+      .status(500)
+      .json({ message: "reset password failed. Please try again later." });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  try {
+    const { userId } = jwt.verify(token, process.env.SECRET);
+    const salt = await bcrypt.genSalt(12);
+    const hashedpassword = await bcrypt.hash(req.body.password, salt);
+    await User.findByIdAndUpdate({ _id: userId }, { password: hashedpassword });
+    return res.status(200).json({ message: "password changed successfully" });
   } catch (e) {
     console.error("reset password error:", e);
     return res
@@ -219,10 +288,11 @@ export {
   signUp,
   login,
   isEmailExist,
-  resetPassword,
+  forgotPassword,
   isUsernameAvailable,
   getProfileData,
   getUserNotifications,
+  resetPassword,
   followUser,
   getFollowers,
   getFollowing,

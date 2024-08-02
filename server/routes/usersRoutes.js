@@ -8,6 +8,7 @@ import {
   login,
   signUp,
   resetPassword,
+  forgotPassword,
   getProfileData,
   getUserNotifications,
   followUser,
@@ -21,7 +22,9 @@ router.post("/login", validateLoginForm, login);
 
 router.post("/signup", validateSignupForm, signUp);
 
-router.patch("/resetPassword", requireLogin, resetPassword);
+router.post("/forgot-password", forgotPassword);
+
+router.post("/reset-password/:token", resetPassword);
 
 router.get("/:userId/profile", getProfileData);
 

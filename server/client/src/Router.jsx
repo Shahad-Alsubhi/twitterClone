@@ -6,6 +6,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import IndividualTweet from "./pages/IndividualTweet";
 import Notifications from "./pages/Notifications";
+import ResetPassword from "./pages/ResetPassword";
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -38,9 +39,15 @@ const Router = createBrowserRouter([
       path:"/home/notifications",
       element:<Notifications/>
     },
+   
   
     
-    ]
+    ],
+    
+  },
+  {
+    path:`/reset-password/:token`,
+    element:<ResetPassword/>
   },
  
   

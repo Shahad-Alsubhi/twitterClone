@@ -11,7 +11,7 @@ export default function HomePage(){
     return(
         <div className='flex justify-center p-4 pt-0 flex-row-reverse max-[500px]:p-0 max-[500px]:pb-[50px] ' >
         <SearchPage style={"max-[990px]:hidden max-w-[22rem] pl-8"}/>       
-        <div className='max-h-screen overflow-scroll custom-scroll border-[0.1px] border-b-0 border-t-0  border-custom-border-color'>
+        <div className='max-h-screen overflow-scroll custom-scroll border-[0.1px] border-b-0 border-t-0 w-full max-w-[41rem] border-custom-border-color'>
         
         <Outlet/>
         </div>
