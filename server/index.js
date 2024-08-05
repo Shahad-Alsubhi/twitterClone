@@ -16,6 +16,8 @@ app.use(cors
     credentials: true, methods: ['GET', 'POST', 'PUT', 'PATCH']
   })
 );
+
+
 // Resolving dirname for ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

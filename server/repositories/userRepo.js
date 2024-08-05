@@ -331,8 +331,9 @@ const getSearchResults=async(req,res)=>{
 
 const updateProfile=async(req,res)=>{
   const {name,bio}=req.body
-  const profile_picture_url= req.files['profile_picture_url']
+  console.log(name,bio,req.files)
   const  header_picture_url= req.files['header_picture_url']
+  const profile_picture_url= req.files['profile_picture_url']
   await User.findByIdAndUpdate(req.userId, { $set: { name,bio,profile_picture_url,header_picture_url }})
   console.log(name,bio,profile_picture_url,header_picture_url)
   req.res(200).json({message:"updated"})

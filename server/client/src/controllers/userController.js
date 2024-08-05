@@ -116,7 +116,7 @@ const handleUpdateProfile=async({name,bio,header,avatar})=>{
             "Content-Type":"application/json",
             Authorization: `Bearer ${userToken}`,
         },
-        method:"patch",
+        method:"PATCH",
         body:JSON.stringify({name,bio,header_picture_url:header,profile_picture_url:avatar})
     })
     const response=await res.json()
