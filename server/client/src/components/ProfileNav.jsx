@@ -1,9 +1,9 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Tweet from './Tweet';
+import { useEffect, useState } from 'react';
+import TweetController from '../controllers/TweetController.js';
 import TweetContent from './tweetContent';
 
 function CustomTabPanel(props) {
@@ -17,30 +17,37 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
     </div>
   );
 }
 
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-// function a11yProps(index) {
-//   return {
-//     id: `simple-tab-${index}`,
-//     'aria-controls': `simple-tabpanel-${index}`,
-//   };
-// }
-
 export default function ProfileNav() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [tweets,setTweets]=useState([])
+  const {getUserTweets,getLikedTweets} =TweetController()
+  
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect( ()=>{
+    async function fetchData() {
+      if(value==0||value==1){
+     const tweets= await getUserTweets()
+      setTweets(tweets)
+    }
+    else {
+      const tweets= await getLikedTweets()
+      setTweets(tweets)
+    }
+
+    }
+    fetchData();
+
+  },[value])
 
   return (
     <Box sx={{ width: '100%', maxWidth:"656px", padding:"0" }}
@@ -58,24 +65,42 @@ export default function ProfileNav() {
         }}/>
         </Tabs>
       </Box>
+
+
       <CustomTabPanel value={value} index={0}>
-      <Tweet />
-    <Tweet/>
-    <Tweet img={true}/>
-    
+        {tweets
+  .filter(tweet => tweet.type === "tweet")
+  .map(tweet => (
+    <Tweet key={tweet._id} tweet={tweet} />
+  ))
+        }
+      </CustomTabPanel>
+
+      <CustomTabPanel value={value} index={1}>
+
+      {tweets
+  .filter(tweet => tweet.type === "comment")
+  .map(tweet => (
+    <>
+    <TweetContent key={tweet.parent_tweet._id} tweet={tweet.parent_tweet} reply={true}/>
+    <Tweet key={tweet._id} tweet={tweet} />
+    </>
+  ))
+        }
 
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-      <TweetContent reply={true}/>
-      <Tweet />
-      <TweetContent reply={true}/>
-      <Tweet />
-      </CustomTabPanel>
+
+
       <CustomTabPanel value={value} index={2}>
-      <Tweet/>
-    <Tweet/>
-    <Tweet/>
-          </CustomTabPanel>
+      {tweets
+  .map(tweet => (
+    <Tweet key={tweet._id} tweet={tweet.tweet} />
+  ))
+        }
+      </CustomTabPanel>
+
+
+
     </Box>
   );
 }

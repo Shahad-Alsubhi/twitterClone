@@ -6,6 +6,7 @@ import Tweet from "../models/tweet.js";
 import Retweet from "../models/retweet.js";
 
 const createTweet = async (req, res) => {
+  console.log(req.body)
   try {
     const { type, parent_tweet, content_text, content_images_urls } = req.body;
     if (!content_text && !content_images_urls) {
@@ -109,8 +110,13 @@ const getFollowingTweets = async (req, res) => {
 
 const getUserTweets = async (req, res) => {
   try {
-    const tweets = await Tweet.find({ created_by: req.params.userId }).sort({
+    const tweets = await Tweet.find({ created_by: req.user._id }).sort({
       created_at: -1,
+    }).populate("created_by").populate({
+      path: 'parent_tweet', 
+      populate: {
+        path: 'created_by', 
+      }
     });
     return res
       .status(200)
@@ -131,7 +137,7 @@ const getTweetComments = async (req, res) => {
       type: "comment",
     }).sort({
       created_at: -1,
-    });
+    }).populate("created_by");
     return res
       .status(200)
       .json({ message: "fetched tweets successfully", tweets });
@@ -287,7 +293,12 @@ const likedTweets = async (req, res) => {
   try {
     const tweets = await Like.find({ user_id: req.user._id }).sort({
       created_at: -1,
-    });
+    }).populate({
+      path: 'tweet',      
+      populate: {
+        path: 'created_by', 
+      }
+    })
     return res
       .status(200)
       .json({ message: "fetched tweets successfully", tweets });

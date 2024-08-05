@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { json, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { UserContext } from "../context/userContext"
 
 
@@ -8,12 +8,12 @@ const UserController=()=>{
 const [errorMessage,setErrorMessage]=useState("")
 const [successfulMessage,setSuccessfulMessage]=useState("")
 
-const { user,setUser } = useContext(UserContext)
+const { userToken,setUserToken } = useContext(UserContext)
 const navigate=useNavigate()
 
 
 const handleLogin=async (data)=>{
-  await  fetch("http://localhost:5550/users/user/login",{
+  await  fetch("https://twitterclone-wln9.onrender.com/users/user/login",{
         method:"post",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
@@ -23,14 +23,15 @@ const handleLogin=async (data)=>{
             setErrorMessage(response.message);
         }else{
             localStorage.setItem("user",response.token)
-            setUser(response.token);
+            setUserToken(response.token);
+            
             navigate("/home/tweets");
         }
     })
 }
 
 const handleSignup=async (data)=>{
-    await  fetch("http://localhost:5550/users/user/signup",{
+    await  fetch("https://twitterclone-wln9.onrender.com/users/user/signup",{
           method:"post",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify(data)
@@ -40,14 +41,14 @@ const handleSignup=async (data)=>{
               setErrorMessage(response.message);
           }else{
               localStorage.setItem("user",response.token)
-              setUser(response.token);
+              setUserToken(response.token);
               navigate("/home/tweets");
           }
       })
   }
 
 const handleResetPassword=async(data)=>{
-    await fetch("http://localhost:5550/users/user/forgot-password",{
+    await fetch("https://twitterclone-wln9.onrender.com/users/user/forgot-password",{
         method:"post",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
@@ -65,7 +66,7 @@ const handleResetPassword=async(data)=>{
 
 const handleSetNewPassword=async(data,token)=>{
 
-    await fetch(`http://localhost:5550/users/user/reset-password/${token}`,{
+    await fetch(`https://twitterclone-wln9.onrender.com/users/user/reset-password/${token}`,{
         method:"post",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
@@ -84,15 +85,44 @@ const handleSetNewPassword=async(data,token)=>{
 }
 
 const getProfileData=async ()=>{
-    const res =await fetch("http://localhost:5550/users/user",{
+    const res =await fetch("https://twitterclone-wln9.onrender.com/users/user/profile",{
         headers:{"Content-Type":"application/json",
-        Authorization: `Bearer ${user}`,
+        Authorization: `Bearer ${userToken}`,
         },
-        
-
     })
+    const response=await res.json()
+    if(res.ok){
+        return response.profileData
+
+    }
 
 }
+
+const getSearchResults=async (searchTerm)=>{
+    const res =await fetch(`https://twitterclone-wln9.onrender.com/users/user/search/${searchTerm}`)
+    const response=await res.json()
+    if(res.ok){
+        console.log( response.results)
+        return response.results
+
+    }
+
+}
+
+const handleUpdateProfile=async({name,bio,header,avatar})=>{
+     
+    const res=await fetch('https://twitterclone-wln9.onrender.com/users/user/update-profile',{
+        headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${userToken}`,
+        },
+        method:"patch",
+        body:JSON.stringify({name,bio,header_picture_url:header,profile_picture_url:avatar})
+    })
+    const response=await res.json()
+    console.log(response)
+}
+
 
 return{
     handleLogin,
@@ -100,7 +130,10 @@ return{
     handleResetPassword,
     successfulMessage,
     handleSignup,
-    handleSetNewPassword
+    handleSetNewPassword,
+    getProfileData,
+    getSearchResults,
+    handleUpdateProfile
 }
 }
 export default UserController;

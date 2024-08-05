@@ -21,11 +21,13 @@ router.get("/", getAllTweets);
 
 router.get("/following-tweets", requireLogin, getFollowingTweets);
 
-router.get("/:userId/Tweets", requireLogin, getUserTweets);
+// router.get("/:userId/tweets", requireLogin, getUserTweets);
+router.get("/user-tweets", requireLogin, getUserTweets);
 
-router.get("/:tweetId/Comments", getTweetComments);
 
-router.get("/:tweetId/Quotes", getTweetQuotes);
+router.get("/:tweetId/comments", getTweetComments);
+
+router.get("/:tweetId/quotes", getTweetQuotes);
 
 router.post("/:tweetId/save", requireLogin, saveTweet);
 
@@ -33,24 +35,10 @@ router.post("/:tweetId/like", requireLogin, likeTweet);
 
 router.post("/:tweetId/retweet", requireLogin, retweet);
 
-router.get("/savedTweets", requireLogin, savedTweets);
+router.get("/saved-tweets", requireLogin, savedTweets);
 
-router.get("/likedTweets", requireLogin, likedTweets);
+router.get("/liked-tweets", requireLogin, likedTweets);
 
-router.get("/test", (req, res) => {
-  const adder = makeAdder();
 
-  console.log(adder(10));
-
-  res.status(20).send();
-});
-
-function makeAdder() {
-  const adder = 10;
-
-  return function (value) {
-    return adder + value;
-  };
-}
 
 export default router;

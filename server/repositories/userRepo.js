@@ -19,8 +19,23 @@ const signUp = async (req, res) => {
     const hashedpassword = await bcrypt.hash(newUser.password, salt);
     newUser.password = hashedpassword;
     await newUser.save();
+    const {
+      username:Username,
+      joined_at,
+      name:Name,
+      bio,
+      header_picture_url,
+      profile_picture_url
+    }=newUser
   
-    const token = jwt.sign({ userId: newUser._id }, process.env.SECRET, {
+    const token = jwt.sign({ userId: newUser._id ,profileData:{
+      username:Username,
+      joined_at,
+      name:Name,
+      bio,
+      header_picture_url,
+      profile_picture_url
+    }}, process.env.SECRET, {
       expiresIn: "10h",
     });
 
@@ -40,7 +55,22 @@ const login = async (req, res) => {
 
     if (userRecord != null) {
       if (await bcrypt.compare(password, userRecord.password)) {
-        const token = jwt.sign({ userId: userRecord._id }, process.env.SECRET, {
+        const {
+          username:Username,
+          joined_at,
+          name:Name,
+          bio,
+          header_picture_url,
+          profile_picture_url
+        }=userRecord
+        const token = jwt.sign({ userId: userRecord._id,profileData:{
+          username:Username,
+          joined_at,
+          name:Name,
+          bio,
+          header_picture_url,
+          profile_picture_url
+        } }, process.env.SECRET, {
           expiresIn: "10h",
         });
         return res.status(200).json({ message: "successful login", token });
@@ -189,7 +219,7 @@ const resetPassword = async (req, res) => {
 
 const getProfileData = async (req, res) => {
   try {
-    const profileData = await User.findById(req.params.userId).select(
+    const profileData = await User.findById(req.user._id).select(
       "username joined_at name bio header_picture_url profile_picture_url"
     );
     return res
@@ -284,6 +314,30 @@ const followUser = async (req, res) => {
   }
 };
 
+const getSearchResults=async(req,res)=>{
+  try {
+    const { searchTerm } = req.params;
+    const results= await User.find( { $or: [{name:{$regex:searchTerm,$options:"i"}},{username:{$regex:searchTerm,$options:"i"}}]})
+    return res.status(200).json({results})
+
+  
+} catch (e) {
+  console.error("fetch following error:", e);
+  return res
+    .status(500)
+    .json({ message: "something went wrong, Please try again later." });
+}
+}
+
+const updateProfile=async(req,res)=>{
+  const {name,bio}=req.body
+  const {profile_picture_url,header_picture_url}=req.files
+  await User.findByIdAndUpdate(req.userId, { $set: { name,bio,profile_picture_url,header_picture_url }})
+  console.log(name,bio,profile_picture_url,header_picture_url)
+  req.res(200).json({message:"updated"})
+  
+}
+
 export {
   signUp,
   login,
@@ -296,4 +350,5 @@ export {
   followUser,
   getFollowers,
   getFollowing,
+  getSearchResults,updateProfile
 };

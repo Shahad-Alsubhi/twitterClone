@@ -6,20 +6,33 @@ import HomeIcon from '@mui/icons-material/Home';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
-import {  useState } from 'react';
+import {  useContext, useState } from 'react';
 import LogoWhite from '../assets/logoWhite.png'
 import Avatar from './Avatar';
 import QuillPen from './QuillPen';
 import CreateTweet from './CreateTweetDialog'
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
+// import UserController from '../controllers/userController';
+import { SearchContext } from '../context/searchContext';
+import { UserContext } from '../context/userContext';
 
 
-
-    export default function BottomNav() {
-
+    export default  function BottomNav() {
       const matches = useMediaQuery('(min-width:1200px)');
-       const [value, setValue] = useState(0);
+      const [value, setValue] = useState(0);
+      // const {getProfileData}=UserController()
+      const {profileData}=useContext(UserContext)
+      const {search,setSearch}=useContext(SearchContext)
+
+      // useEffect( ()=>{
+      //   async function fetchData() {
+      //     const profileData=await getProfileData()
+      //     setProfileData(profileData)
+      //   }
+      //   fetchData();
+      
+      // },[])
     
       return (
 
@@ -34,17 +47,17 @@ import Box from '@mui/material/Box';
             }}
           >
    
-            <BottomNavigationAction  sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px", color:"white" ,'@media (max-width:500px)':{display:"none"} }} icon={ <img src={LogoWhite} alt="" className='w-5 h-5' />} />
+            <BottomNavigationAction  sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px", color:"white" ,'@media (max-width:500px)':{display:"none"} }} icon={ <img src={LogoWhite} alt="" className='w-5 h-5' />}  />
             <BottomNavigationAction label={matches? "Home": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px", color:"white",display:"flex" ,flexDirection:"row", gap:"20px",justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem',opacity: 1 }
-                }} icon={<HomeIcon sx={{fontSize:"28px" }} />}  component={Link}  to={"/home/tweets"}
+                }} icon={<HomeIcon sx={{fontSize:"28px" }} />}  component={Link}  to={"/home/tweets"} onClick={()=>{setSearch(true);console.log(search)}}
                 />
             <BottomNavigationAction label={matches?"Search": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px", color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' ,opacity: 1}
-                }} icon={<SearchIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/search"}/>
+                }} icon={<SearchIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/search"}     onClick={()=>{setSearch(false);console.log(search)} } />
                
             <BottomNavigationAction label={matches?"Notifications": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px",color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' }
-                }} showLabel icon={<NotificationsOutlinedIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/notifications"} />
+                }} showLabel icon={<NotificationsOutlinedIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/notifications"} onClick={()=>{setSearch(true);console.log(search)}} />
             <BottomNavigationAction label={matches?"Messages": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px" ,color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' }
-                }} showLabel icon={<EmailOutlinedIcon  sx={{fontSize:"28px"}}/>} />
+                }} showLabel icon={<EmailOutlinedIcon  sx={{fontSize:"28px"}}/>}  />
             <BottomNavigationAction label={matches?"Communities": undefined} sx={{ padding: 0 , minWidth:"28px" ,maxWidth:"28px", color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' }
                 }} showLabel icon={<PeopleOutlinedIcon sx={{fontSize:"28px"}}/>} />
           </BottomNavigation>
@@ -55,11 +68,14 @@ import Box from '@mui/material/Box';
 
 
 
-          <Avatar/>
+          <Link className='flex flex-row gap-3 items-center' to={"/home/profile"}>
+
+          <Avatar img={ profileData.profile_picture_url}/>
           <div className="max-xl:hidden">
-<h1 className='font-bold'>Lorem ipsum</h1>
-<h5 className='text-custom-gray'>@Lorem987</h5>
-</div>
+          <h1 className='font-bold'>{profileData? profileData.name:""}</h1>
+          <h5 className='text-custom-gray'>@{profileData? profileData.username:""}</h5>
+          </div>          </Link>
+
           </div>
           </div>
           <CreateTweet/>

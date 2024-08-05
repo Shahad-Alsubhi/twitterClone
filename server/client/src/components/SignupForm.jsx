@@ -8,7 +8,7 @@ export default function Signup(){
   const {handleSignup,errorMessage}=UserController()
 
     return(
-    <dialog id="Signup_form" className="modal max-sm:bg-black bg-[#5b708366] ">
+    <dialog id="Signup_form" className="modal max-sm:bg-black bg-[#5b708366] scrollbar-">
   <div className="modal-box bg-black ">
     <form method="dialog ">
       <button onClick={(e)=>{e.preventDefault();document.getElementById("Signup_form").close()}} className="btn btn-sm btn-circle btn-ghost absolute left-2 top-2">✕</button>
@@ -17,7 +17,7 @@ export default function Signup(){
   <div className="hero-content flex-col ">
   <img src={logoWhight} alt="Logo" className=" w-8 h-8 flex-col"/>
     
-      <form className="card-body pt-6">
+      <form className="card-body pt-4 ">
       <h1 className="text-2xl font-extrabold mb-5">Create your account
       </h1> 
       {errorMessage && <h4 className="m-1 text-[#e25858]">{errorMessage}</h4>}      
@@ -56,7 +56,7 @@ export default function Signup(){
           <p className="mt-1 text-[#e25858]">{errors.password?.message}</p>
 
         </div>
-        <div className="form-control mt-6">
+        <div className="form-control mt-4">
           <button onClick={handleSubmit(handleSignup) }className="btn btn-primary bg-slate-50 rounded-full	outline-none	min-h-0  h-10 hover:bg-slate-100 mt-6 ">Signup</button>
 
         </div>

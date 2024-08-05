@@ -1,25 +1,26 @@
 import Avatar from "./Avatar"
 
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import InteractionWithTweet from "./InteractionWithTweet"
 
 
+
 const TweetContent = ({newReply,style,reply,tweet}) => {
-  console.log(tweet?tweet.created_by.username:"")
-  console.log(tweet)
+  
   const contentText = tweet ? tweet.content_text : '';
   const contentImg = tweet ? tweet.content_images_urls : '';
-  
+  const navigate = useNavigate();
 
 
-  return (<div className={`flex flex-row w-full ${style} border-custom-border-color pb-1 ${newReply ? "min-h-28" :"min-h-fit" } ${reply?"p-4":"p-0"} `}>
+
+
+  return (<div onClick={()=>{navigate('/home/tweets/tweet', { state: { tweet } }); }} className={`flex flex-row w-full ${style} border-custom-border-color pb-1 ${newReply ? "min-h-28" :"min-h-fit" } ${reply?"p-4":"p-0"} `}>
     <div className="flex flex-col items-center">
     <Avatar img={tweet?tweet.created_by.profile_picture_url:""}/>
     {(newReply||reply)&&
     <div className="w-[1px] bg-custom-gray h-full "></div>}
     </div>
-    <Link className="w-full" to={"/home/tweets/tweet"}>
-    <div className="flex flex-col ml-2 ">
+    <div className="flex flex-col ml-2 w-full ">
 
         <div className="flex flex-row gap-x-1">
             <h3 className="text-sm font-bold">{tweet?tweet.created_by.name:""}</h3>
@@ -30,18 +31,15 @@ const TweetContent = ({newReply,style,reply,tweet}) => {
         <div>
         {contentText && <p className="text-sm mt-2">{contentText}</p>}
 
-           {/* {tweet.content_text && <p className="text-sm mt-2">{tweet.content_text}</p>} */}
         </div>
         <div className={`w-full h-full  max-h-[23rem] overflow-hidden rounded-xl flex justify-center mt-4 border-custom-gray ${newReply ? 'hidden' : 'static' }`}>
       {contentImg&& <img src={contentImg} />}
-       {/* <img className="" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" /> */}
         </div>
 
-      {reply&&<InteractionWithTweet style={"pl-0"}/>
+      {reply&&<InteractionWithTweet style={"pl-2"}/>
       
       }
     </div>
-    </Link>
     </div>
   )
 }

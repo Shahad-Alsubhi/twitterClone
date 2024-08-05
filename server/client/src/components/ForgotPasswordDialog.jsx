@@ -19,7 +19,7 @@ const ForgotPasswordDialog = () => {
     <div className={`hero-content flex-col `}>
     <img src={logoWhight} alt="Logo" className=" w-8 h-8 flex-col"/>
       
-        <form className={`card-body pt-6 ${successfulMessage? "hidden" : "visible"} `}>
+        <form className={`card-body p-0 pt-6 ${successfulMessage? "hidden" : "visible"} `}>
         <h1 className="text-2xl font-extrabold mb-3">Find your X account
         </h1> 
         <p className="pb-4">Enter the email associated with your account to change your password.</p>
@@ -38,9 +38,9 @@ const ForgotPasswordDialog = () => {
   
         </form>
     </div>
-    <div>
-        <h1 className={successfulMessage ?"visible":"hidden"}>A password reset link has been sent to your email address successfully.</h1>
-    </div>
+   { successfulMessage&&<div className="h-48 p-8">
+        <h1 >A password reset link has been sent to your email address successfully.</h1>
+    </div>}
   </div>
   
   </dialog>

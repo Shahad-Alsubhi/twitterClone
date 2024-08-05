@@ -24,7 +24,7 @@ const Router = createBrowserRouter([
       path:"/home/tweets",
       element:<TweetsContainer/>,
       },
-      {  path:"/home/tweets/tweet",
+      {  path:"/home/tweets/:tweet",
         element:<IndividualTweet/>
       },
     {

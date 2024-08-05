@@ -14,7 +14,11 @@ import {
   followUser,
   getFollowers,
   getFollowing,
+  getSearchResults,
+  updateProfile
 } from "../repositories/userRepo.js";
+import upload from "../config/cloudinary.js";
+
 
 const router = express.Router();
 
@@ -26,7 +30,8 @@ router.post("/forgot-password", forgotPassword);
 
 router.post("/reset-password/:token", resetPassword);
 
-router.get("/:userId/profile", getProfileData);
+// router.get("/:userId/profile", getProfileData);
+router.get("/profile",requireLogin, getProfileData);
 
 router.get("/notifications", requireLogin, getUserNotifications);
 
@@ -35,5 +40,10 @@ router.post("/follow/:followingId", requireLogin, followUser);
 router.get("/:userId/followers", getFollowers);
 
 router.get("/:userId/following", getFollowing);
+
+router.get("/search/:searchTerm", getSearchResults);
+
+router.patch("/update-profile",requireLogin, upload.fields([{name:"profile_picture_url"},{name:"header_picture_url"}]) , updateProfile)
+
 
 export default router;
