@@ -43,7 +43,7 @@ router.get("/:userId/following", getFollowing);
 
 router.get("/search/:searchTerm", getSearchResults);
 
-router.patch("/update-profile",requireLogin, upload.fields([{name:"profile_picture_url"},{name:"header_picture_url"}]) , updateProfile)
+router.patch("/update-profile",requireLogin, upload.fields([{name:"profilePicture",maxCount:1},{name:"headerPicture",maxCount:1}]) , updateProfile)
 
 
 export default router;

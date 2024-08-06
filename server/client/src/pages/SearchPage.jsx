@@ -22,7 +22,9 @@ const SearchPage = ({style
     <div className={` ${style} p-5 pt-2  max-h-screen `}>
       <div className='flex flex-row rounded-full h-11 bg-[#202327] items-center justify-between pr-5 mb-4'>
      <input type="text" value={searchTerm} onChange={(e)=>{setSearchTerm(e.target.value)}} placeholder='Search' className='bg-transparent placeholder:text-custom-gray 
-     placeholder:text-sm   min-w-1 pl-6 focus:outline-none  ' /><span >{searchTerm&&<CloseIcon className='text-custom-gray mr-2 cursor-pointer ' onClick={()=>{setSearchTerm("");setSearchResult([])}}/>}<SearchIcon className='text-custom-gray cursor-pointer' onClick={()=>{handleSearch(searchTerm)}}/></span></div>
+     placeholder:text-sm   min-w-1 pl-6 focus:outline-none  ' /><span >{searchTerm&&<CloseIcon className='text-custom-gray mr-2 cursor-pointer ' onClick={()=>{setSearchTerm("");setSearchResult([])}}/>}
+     <SearchIcon className='text-custom-gray cursor-pointer'
+      onClick={()=>{handleSearch(searchTerm)}}/></span></div>
      
 
     {!searchTerm &&<div className=" border-[#252424] rounded-lg p-4 w w-full border-2 ">

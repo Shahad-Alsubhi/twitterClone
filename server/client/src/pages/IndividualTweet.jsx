@@ -13,7 +13,6 @@ const IndividualTweet = () => {
   const tweet = location.state?.tweet;
   const [tweets,setTweets]=useState([])
   const {getTweetComments}=TweetController()
-  // const {setTweet}=useContext(TweetContext)
 
 
   useEffect( ()=>{
@@ -22,9 +21,8 @@ const IndividualTweet = () => {
       setTweets(tweets)
     }
     fetchData();
-
-
   },[tweet])
+  
     return (
     <div className="border-custom-border-color border-[1px] w-full max-w-[41rem] h-screen border-b-0 ">
          <div className="flex flex-row flex-start items-center z-10 h-14 p-4 border-custom-border-color border-[1px] border-b-0  w-full bg-black  ">
@@ -37,7 +35,6 @@ const IndividualTweet = () => {
         <Tweet style="border-t-[1px] border-custom-border-color mt-2" individual={true} tweet={tweet} />
 
         {/* comments */}
-       {console.log(tweets)}
         {tweets.map(tweet=>(
           <Tweet tweet={tweet} key={tweet._id}/>
         ))}

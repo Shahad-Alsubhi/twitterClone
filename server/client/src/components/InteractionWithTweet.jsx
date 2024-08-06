@@ -1,10 +1,16 @@
 import { useContext } from "react";
 import { TweetContext } from "../context/tweetContext";
+import { UserContext } from "../context/userContext";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import TweetController from "../controllers/TweetController";
 
 
 
 const InteractionWithTweet = ({individual,style,tweet}) => {
   const {setTweet}=useContext(TweetContext)
+  const {likedTweets}=useContext(UserContext)
+  const {likeTweet}=TweetController()
+  const liked=likedTweets.some((like)=> like.tweet._id==tweet._id)
 
   return (
     <div className={`flex flex-row justify-between items-center h-8 p-4  pr-0   ${style} pl-10  `}>
@@ -14,10 +20,13 @@ const InteractionWithTweet = ({individual,style,tweet}) => {
 
                 </div>  
                 <div className="cursor-pointer">
-                <svg viewBox="0 0 48 48" className="w-4 h-4 inline mr-1" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#71767b" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" className="stroke-010101"><path d="M39.2 3 45 8.8l-5.7 5.9"></path><path d="M45 8.9H14.6C8.2 8.9 3 14.1 3 20.6v5.1M8.8 45 3 39.2l5.7-5.9"></path><path d="M3 39.1h30.4c6.4 0 11.6-5.2 11.6-11.7v-5.1"></path></g></svg><h5 className="inline text-xs text-custom-gray">56k</h5>
+                <svg viewBox="0 0 48 48" className="w-4 h-4 inline mr-1 " xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#71767b" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="3" className="stroke-010101 "><path d="M39.2 3 45 8.8l-5.7 5.9"></path><path d="M45 8.9H14.6C8.2 8.9 3 14.1 3 20.6v5.1M8.8 45 3 39.2l5.7-5.9"></path><path d="M3 39.1h30.4c6.4 0 11.6-5.2 11.6-11.7v-5.1"></path></g></svg><h5 className="inline text-xs text-custom-gray">56k</h5>
                 </div>
-                <div className="cursor-pointer">
-                <svg viewBox="0 0 32 32"className="w-4 h-4 inline mr-1" xmlns="http://www.w3.org/2000/svg"><path d="M16 28.72a3 3 0 0 1-2.13-.88l-10.3-10.3a8.72 8.72 0 0 1-2.52-6.25 8.06 8.06 0 0 1 8.14-8A8.06 8.06 0 0 1 15 5.68l1 1 .82-.82a8.39 8.39 0 0 1 11-.89 8.25 8.25 0 0 1 .81 12.36l-10.5 10.51a3 3 0 0 1-2.13.88ZM9.15 5.28A6.12 6.12 0 0 0 4.89 7a6 6 0 0 0-1.84 4.33A6.72 6.72 0 0 0 5 16.13l10.3 10.3a1 1 0 0 0 1.42 0l10.51-10.52a6.25 6.25 0 0 0 1.77-4.8 6.18 6.18 0 0 0-2.43-4.55 6.37 6.37 0 0 0-8.37.71L16.71 8.8a1 1 0 0 1-1.42 0l-1.7-1.7a6.28 6.28 0 0 0-4.4-1.82Z" data-name="Layer 54" fill="#71767b" className="fill-101820"></path></svg><h5 className="inline text-xs text-custom-gray">56k</h5>
+                <div className="cursor-pointer" onClick={()=>likeTweet(tweet)}>
+                
+                {!liked&&<svg viewBox="0 0 32 32"className="w-4 h-4 inline mr-1" xmlns="http://www.w3.org/2000/svg"><path d="M16 28.72a3 3 0 0 1-2.13-.88l-10.3-10.3a8.72 8.72 0 0 1-2.52-6.25 8.06 8.06 0 0 1 8.14-8A8.06 8.06 0 0 1 15 5.68l1 1 .82-.82a8.39 8.39 0 0 1 11-.89 8.25 8.25 0 0 1 .81 12.36l-10.5 10.51a3 3 0 0 1-2.13.88ZM9.15 5.28A6.12 6.12 0 0 0 4.89 7a6 6 0 0 0-1.84 4.33A6.72 6.72 0 0 0 5 16.13l10.3 10.3a1 1 0 0 0 1.42 0l10.51-10.52a6.25 6.25 0 0 0 1.77-4.8 6.18 6.18 0 0 0-2.43-4.55 6.37 6.37 0 0 0-8.37.71L16.71 8.8a1 1 0 0 1-1.42 0l-1.7-1.7a6.28 6.28 0 0 0-4.4-1.82Z" data-name="Layer 54" fill="#71767b" className="fill-101820"></path></svg>}
+                {liked&&<FavoriteIcon sx={{fontSize:"18px" ,color:"#C80724", marginRight:"4px"}} />}
+                <h5 className="inline text-xs text-custom-gray">56k</h5>
                 </div>
                 <div className={`flex items-center cursor-pointer ${individual?"hidden":"static"}`}> 
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className=" w-4  mr-1 inline h-4"><path d="M5 12a1 1 0 0 0-1 1v8a1 1 0 0 0 2 0v-8a1 1 0 0 0-1-1Zm5-10a1 1 0 0 0-1 1v18a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1Zm10 14a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm-5-8a1 1 0 0 0-1 1v12a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z" fill="#71767b" className="fill-6563ff"></path></svg>

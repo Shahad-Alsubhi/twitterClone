@@ -8,7 +8,6 @@ import TweetController from '../controllers/TweetController';
 import { UserContext } from '../context/userContext';
 const AddComment = () => {
   const {tweet}=useContext(TweetContext)
-   
   const {register,handleSubmit,formState:{errors}}=useForm()
   const {addTweet}=TweetController()
   const {profileData}=useContext(UserContext)

@@ -6,9 +6,7 @@ import UserController from "../controllers/userController";
 
 const ForgotPasswordDialog = () => {
     const {register,handleSubmit,formState:{errors}}=useForm()
-    const { errorMessage,
-        handleResetPassword,
-        successfulMessage}=UserController()
+    const { errorMessage, handleResetPassword, successfulMessage}=UserController()
 
   return (
     <dialog id="ForgotPasswordForm" className={`modal max-sm:bg-black bg-[#5b708366]  `}>
@@ -38,7 +36,7 @@ const ForgotPasswordDialog = () => {
   
         </form>
     </div>
-   { successfulMessage&&<div className="h-48 p-8">
+   { successfulMessage && <div className="h-48 p-8">
         <h1 >A password reset link has been sent to your email address successfully.</h1>
     </div>}
   </div>

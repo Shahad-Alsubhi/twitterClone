@@ -13,7 +13,6 @@ import QuillPen from './QuillPen';
 import CreateTweet from './CreateTweetDialog'
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
-// import UserController from '../controllers/userController';
 import { SearchContext } from '../context/searchContext';
 import { UserContext } from '../context/userContext';
 
@@ -21,18 +20,8 @@ import { UserContext } from '../context/userContext';
     export default  function BottomNav() {
       const matches = useMediaQuery('(min-width:1200px)');
       const [value, setValue] = useState(0);
-      // const {getProfileData}=UserController()
       const {profileData}=useContext(UserContext)
       const {search,setSearch}=useContext(SearchContext)
-
-      // useEffect( ()=>{
-      //   async function fetchData() {
-      //     const profileData=await getProfileData()
-      //     setProfileData(profileData)
-      //   }
-      //   fetchData();
-      
-      // },[])
     
       return (
 
@@ -74,7 +63,8 @@ import { UserContext } from '../context/userContext';
           <div className="max-xl:hidden">
           <h1 className='font-bold'>{profileData? profileData.name:""}</h1>
           <h5 className='text-custom-gray'>@{profileData? profileData.username:""}</h5>
-          </div>          </Link>
+          </div>          
+          </Link>
 
           </div>
           </div>

@@ -72,14 +72,5 @@ const validateLoginForm = async (req, res, next) => {
   }
 };
 
-function makeAdder(){
-  const adder=10
-  return function(value){
-    return adder+value
-  }
-}
-
-
-
 
 export { validateLoginForm, validateSignupForm, requireLogin };

@@ -1,17 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {UserContext} from "../context/userContext"
 
 
 const TweetController = () => {
-     const {userToken}=useContext(UserContext)
+     const {userToken,setLikedTweets,update}=useContext(UserContext)
   
+
+     useEffect( ()=>{
+      async function fetchData() {
+        const likedTweets=await getLikedTweets()
+        setLikedTweets(likedTweets)
+      }
+      fetchData();
+    },[update])
 
     const getAllTweets=async ()=>{
      const res= await fetch("https://twitterclone-wln9.onrender.com/tweets")
      if (res.ok) {
         const { tweets } = await res.json();
-        console.log(tweets,"controller")
-
         return tweets;
       }
       
@@ -39,11 +45,7 @@ const TweetController = () => {
         },
       })
       if (res.ok) {
-        console.log("userr")
-
         const { tweets } = await res.json(); 
-        console.log(tweets)
-
         return tweets;
      
       }
@@ -96,30 +98,20 @@ const TweetController = () => {
       })
       if (res.ok) {
         const { tweets } = await res.json(); 
-        console.log(tweets)
         return tweets;
       }
     }
 
-    // const addComment=async(data,type,parent_tweet)=>{
-    //   const {content_text}=data
-    //   const payload = {
-    //     content_text,  
-    //     type,   
-    //     parent_tweet       
-    //   };
-    
-    //  const res= await fetch("http://localhost:5550/tweets/create-tweet",{
-    //     method:"post",
-    //     headers:{
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${user}`,
-    //     },
-    //     body:JSON.stringify(payload)
-    //   })
-   
+    const likeTweet=async(tweet)=>{
+     await fetch(`https://twitterclone-wln9.onrender.com/tweets/${tweet._id}/like`,{
+        method:"post",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
 
-    // }
+    }
 
 
   
@@ -134,7 +126,7 @@ const TweetController = () => {
     getUserTweets,
     getLikedTweets,
     addTweet,
-    getTweetComments
+    getTweetComments,likeTweet
   }
 }
 

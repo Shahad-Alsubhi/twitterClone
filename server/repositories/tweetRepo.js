@@ -59,24 +59,12 @@ const createTweet = async (req, res) => {
 
 const getAllTweets = async (req, res) => {
   try {
-    const {userId} = req.body;
-    console.log(userId)
-    if (!userId) {
       const tweets = await Tweet.find().sort({
         created_at: -1,
       }).populate('created_by');
-      console.log(tweets)
       return res
         .status(200)
         .json({ message: "fetched all tweets successfully", tweets });
-    } else {
-      const tweets = await Tweet.find({ created_by: { $ne: userId } }).sort({
-        created_at: -1,
-      });
-      return res
-        .status(200)
-        .json({ message: "fetched all tweets successfully", tweets });
-    }
   } catch (e) {
     console.error("fetch all tweets error:", e);
     return res

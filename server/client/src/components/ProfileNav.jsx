@@ -2,30 +2,19 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Tweet from './Tweet';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TweetController from '../controllers/TweetController.js';
 import TweetContent from './tweetContent';
+import { UserContext } from '../context/userContext.jsx';
 
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
-    </div>
-  );
-}
 
 export default function ProfileNav() {
+  console.log("render")
   const [value, setValue] = useState(0);
   const [tweets,setTweets]=useState([])
   const {getUserTweets,getLikedTweets} =TweetController()
+  const {likedTweets}=useContext(UserContext)
+
   
 
 
@@ -37,10 +26,6 @@ export default function ProfileNav() {
     async function fetchData() {
       if(value==0||value==1){
      const tweets= await getUserTweets()
-      setTweets(tweets)
-    }
-    else {
-      const tweets= await getLikedTweets()
       setTweets(tweets)
     }
 
@@ -67,18 +52,15 @@ export default function ProfileNav() {
       </Box>
 
 
-      <CustomTabPanel value={value} index={0}>
-        {tweets
+        {value==0&&tweets
   .filter(tweet => tweet.type === "tweet")
   .map(tweet => (
     <Tweet key={tweet._id} tweet={tweet} />
   ))
         }
-      </CustomTabPanel>
+     
 
-      <CustomTabPanel value={value} index={1}>
-
-      {tweets
+      {value==1&&tweets
   .filter(tweet => tweet.type === "comment")
   .map(tweet => (
     <>
@@ -88,16 +70,11 @@ export default function ProfileNav() {
   ))
         }
 
-      </CustomTabPanel>
 
-
-      <CustomTabPanel value={value} index={2}>
-      {tweets
-  .map(tweet => (
+      {value==2 && likedTweets.map(tweet => (
     <Tweet key={tweet._id} tweet={tweet.tweet} />
   ))
         }
-      </CustomTabPanel>
 
 
 

@@ -10,11 +10,12 @@ export default function HomePage(){
     const {search}=useContext(SearchContext)
 
 
+
     return(
         <div className='flex justify-center p-4 pt-0 flex-row-reverse max-[500px]:p-0 max-[500px]:pb-[50px] ' >
        <div className='max-[990px]:hidden w-full max-w-[22rem] '>
        {search&&<SearchPage /> }
-      {!search&& <div className='border-[#252424] rounded-lg p-4 w w-full border-2 mt-10 ml-6'>
+      {!search&& <div className='border-[#252424] rounded-lg p-4  w-11/12 border-2 mt-10 ml-6 '>
        <h1 className="text-xl font-extrabold text-white">
         What&apos;s happening</h1>
         <p className="mt-5"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, 

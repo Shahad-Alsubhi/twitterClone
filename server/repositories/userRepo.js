@@ -26,7 +26,7 @@ const signUp = async (req, res) => {
       bio,
       header_picture_url,
       profile_picture_url
-    }=newUser
+    }= newUser
   
     const token = jwt.sign({ userId: newUser._id ,profileData:{
       username:Username,
@@ -158,7 +158,7 @@ const forgotPassword = async (req, res) => {
       const token = jwt.sign({ userId: userRecord._id }, process.env.SECRET, {
         expiresIn: "10m",
       });
-      var transporter = nodemailer.createTransport({
+      const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
           user: "twitterclone.2024@gmail.com",
@@ -166,14 +166,14 @@ const forgotPassword = async (req, res) => {
         },
       });
 
-      var mailOptions = {
+      const mailOptions = {
         from: "twitterclone.2024@gmail.com",
         to: email,
         subject: "Reset your password",
-        text: `Please click this link to reset your password. \n \n http://localhost:5173/reset-password/${token}`,
+        text: `Please click this link to reset your password. \n \n https://twitterclone-wln9.onrender.com/reset-password/${token}`,
       };
 
-      await transporter.sendMail(mailOptions, function (error, info) {
+       transporter.sendMail(mailOptions, function (error) {
         if (error) {
           return res
             .status(500)
@@ -218,6 +218,7 @@ const resetPassword = async (req, res) => {
 };
 
 const getProfileData = async (req, res) => {
+  
   try {
     const profileData = await User.findById(req.user._id).select(
       "username joined_at name bio header_picture_url profile_picture_url"
@@ -331,12 +332,15 @@ const getSearchResults=async(req,res)=>{
 
 const updateProfile=async(req,res)=>{
   const {name,bio}=req.body
-  console.log(name,bio,req.files)
-  const  header_picture_url= req.files['header_picture_url']
-  const profile_picture_url= req.files['profile_picture_url']
-  await User.findByIdAndUpdate(req.userId, { $set: { name,bio,profile_picture_url,header_picture_url }})
-  console.log(name,bio,profile_picture_url,header_picture_url)
-  req.res(200).json({message:"updated"})
+  console.log(req.user._id,"//",req.body,"//",req.files);
+
+  const profile_picture_url= req.files['profilePicture'][0].path
+  const header_picture_url= req.files['headerPicture'][0].path
+  console.log(req.user._id)
+
+  await User.findByIdAndUpdate(req.user._id, { $set: { name,bio,profile_picture_url,header_picture_url }})
+  // console.log(name,bio,profile_picture_url.path,header_picture_url.path)
+  res.status(200).json({message:"updated"})
   
 }
 

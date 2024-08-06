@@ -12,9 +12,7 @@ export default function Login(){
     return(
         <dialog id="Login_form" className="modal max-sm:bg-black bg-[#5b708366]">
   <div className="modal-box  bg-black  ">
-    <form method="dialog ">
-      <button onClick={(e)=>{e.preventDefault();document.getElementById("Login_form").close()}} className="btn btn-sm btn-circle btn-ghost absolute left-2 top-2">✕</button>
-    </form>
+      <button  onClick={(e)=>{e.preventDefault();document.getElementById("Login_form").close()}}  className="btn btn-sm btn-circle btn-ghost absolute left-2 top-2">✕</button>
 
   <div className="hero-content flex-col ">
   <img src={logoWhight} alt="Logo" className=" w-8 h-8 flex-col"/>

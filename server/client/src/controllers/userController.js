@@ -24,7 +24,6 @@ const handleLogin=async (data)=>{
         }else{
             localStorage.setItem("user",response.token)
             setUserToken(response.token);
-            
             navigate("/home/tweets");
         }
     })
@@ -45,7 +44,7 @@ const handleSignup=async (data)=>{
               navigate("/home/tweets");
           }
       })
-  }
+}
 
 const handleResetPassword=async(data)=>{
     await fetch("https://twitterclone-wln9.onrender.com/users/user/forgot-password",{
@@ -58,7 +57,6 @@ const handleResetPassword=async(data)=>{
             setErrorMessage(response.message);
         }else{
             setSuccessfulMessage(true)
-
         }
 
     })
@@ -81,7 +79,6 @@ const handleSetNewPassword=async(data,token)=>{
 
     })
 
-
 }
 
 const getProfileData=async ()=>{
@@ -102,22 +99,35 @@ const getSearchResults=async (searchTerm)=>{
     const res =await fetch(`https://twitterclone-wln9.onrender.com/users/user/search/${searchTerm}`)
     const response=await res.json()
     if(res.ok){
-        console.log( response.results)
         return response.results
 
     }
 
 }
 
-const handleUpdateProfile=async({name,bio,header,avatar})=>{
-     
+const handleUpdateProfile=async(formData)=>{
+
+    // const {
+    //     name,
+    //     bio,
+    //     headerPicture,
+    //     profilePicture     
+    //   }=data
+    //   console.log(
+    //     name,
+    //     bio,
+    //     headerPicture,
+    //     profilePicture     
+    //   )
+
+
     const res=await fetch('https://twitterclone-wln9.onrender.com/users/user/update-profile',{
         headers:{
             "Content-Type":"application/json",
             Authorization: `Bearer ${userToken}`,
         },
         method:"PATCH",
-        body:JSON.stringify({name,bio,header_picture_url:header,profile_picture_url:avatar})
+        body:JSON.stringify(formData)
     })
     const response=await res.json()
     console.log(response)

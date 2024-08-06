@@ -36,7 +36,7 @@ const TweetContent = ({newReply,style,reply,tweet}) => {
       {contentImg&& <img src={contentImg} />}
         </div>
 
-      {reply&&<InteractionWithTweet style={"pl-2"}/>
+      {reply&&<InteractionWithTweet style={"pl-2"} tweet={tweet}/>
       
       }
     </div>

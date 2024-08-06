@@ -19,6 +19,7 @@ const TweetsContainer = () => {
   const {getAllTweets,getFollowingTweets}=TweetController()
   const {profileData}=useContext(UserContext)
 
+
   const handleChange = async (event, newValue) => {
     setValue(newValue);
   };
@@ -33,19 +34,6 @@ const TweetsContainer = () => {
   },[value])
 
 
-  // const {getProfileData}=UserController()
-  //     const [profileData,setProfileData]=useState("")
-
-  //     useEffect( ()=>{
-  //       async function fetchData() {
-  //         const profileData=await getProfileData()
-  //         setProfileData(profileData)
-  //       }
-  //       fetchData();
-      
-  //     },[])
-
-
   return (
     <><div className='flex flex-row justify-center relative pt-4 pb-7 min-[500px]:hidden'>
     <Link className='flex flex-row gap-3 items-center' to={"/home/profile"}>
@@ -54,7 +42,6 @@ const TweetsContainer = () => {
     </Link>
     <img src={LogoWhite} alt="" className='w-5 h-5' />
 </div>
-    {/* <div className='border-custom-border-color max-w-[41rem] '> */}
     <Box sx={{  borderBottom:"solid #252424 1px", maxWidth:"665px" }}>
       <Tabs
         onChange={handleChange}
