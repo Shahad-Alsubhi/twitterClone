@@ -10,18 +10,18 @@ const app = express();
 app.use(express.json());
 connectDB();
 
-app.use(cors
-  ({
-    origin: 'http://localhost:5173', 
-    credentials: true, methods: ['GET', 'POST', 'PUT', 'PATCH']
-  })
-);
+// app.use(cors
+//   ({
+//     origin: 'http://localhost:5173', 
+//     credentials: true, methods: ['GET', 'POST', 'PUT', 'PATCH']
+//   })
+// );
 
 
 // Resolving dirname for ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname,"../client/dist")));
 
 
 app.use("/users/user", usersRoutes);
