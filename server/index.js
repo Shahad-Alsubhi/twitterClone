@@ -21,7 +21,7 @@ app.use(cors
 // Resolving dirname for ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "/client/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 
 app.use("/users/user", usersRoutes);
@@ -30,7 +30,7 @@ app.use("/tweets", tweetsRouter);
  
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
 
