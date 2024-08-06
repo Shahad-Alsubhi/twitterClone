@@ -4,7 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import usersRoutes from "./routes/usersRoutes.js";
 import tweetsRouter from "./routes/tweetRoutes.js";
-import cors from 'cors';
+// import cors from 'cors';
 
 const app = express();
 app.use(express.json());
