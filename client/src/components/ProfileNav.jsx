@@ -11,12 +11,14 @@ import { useParams } from 'react-router-dom';
 
 
 export default function ProfileNav() {
+  console.log("render")
   const {userId}=useParams()
   const [value, setValue] = useState(0);
-  const [tweets,setTweets]=useState([])
   const {getUserTweets} =TweetController()
+  const [tweets,setTweets]=useState([])
   const {likedTweets}=useContext(LikedTweetsContext)
   const {profileData,userId:Context_userId}=useContext(UserContext)
+
 
   
 

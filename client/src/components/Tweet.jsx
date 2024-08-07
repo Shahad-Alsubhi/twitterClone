@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import AddComment from "./AddComment"
 import InteractionWithTweet from './InteractionWithTweet'
 import TweetContent from './tweetContent'
@@ -9,7 +9,10 @@ import { LikedTweetsContext } from "../context/LikeTweetContext"
 
 const Tweet = ({style,individual,comment,tweet}) => {
   const {likedTweets}=useContext(LikedTweetsContext)
+  
   const liked=likedTweets.some((like)=> like.tweet._id==tweet._id)
+  
+
 
   return (
     <div className={` ${style}  flex flex-col w-full p-4 pb-1 max-h-[36rem]  max-w-[41rem] border-b-[1px] border-custom-border-color `}>
