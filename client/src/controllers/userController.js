@@ -107,7 +107,7 @@ const getSearchResults=async (searchTerm)=>{
 }
 
 const handleUpdateProfile=async(formData)=>{
-    const res=await fetch('http://localhost:5550/users/user/update-profile',{
+    const res=await fetch('https://twitterclone-wln9.onrender.com/users/user/update-profile',{
         headers:{
             Authorization: `Bearer ${userToken}`,
         },
