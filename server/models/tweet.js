@@ -15,6 +15,8 @@ const tweetSchema = mongoose.Schema({
   },
   content_images_urls: {
     type: [String],
+    // type:[{type:String}]
+    
   },
   type: {
     type: String,

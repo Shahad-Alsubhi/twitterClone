@@ -1,17 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import {UserContext} from "../context/userContext"
 
 
 const TweetController = () => {
      const {userToken}=useContext(UserContext)
-    //  useEffect( ()=>{
-    //   async function fetchData() {
-    //     const likedTweets=await getLikedTweets()
-    //     setLikedTweets(likedTweets)
-    //   }
-    //   fetchData();
-    // },[update])
-
+   
     const getAllTweets=async ()=>{
      const res= await fetch("https://twitterclone-wln9.onrender.com/tweets")
      if (res.ok) {
@@ -35,11 +28,11 @@ const TweetController = () => {
       
      }
 
-    const getUserTweets=async()=>{
-      const res= await fetch("https://twitterclone-wln9.onrender.com/tweets/user-tweets",{
+    const getUserTweets=async(userId)=>{
+      const res= await fetch(`http://localhost:5550/tweets/${userId}/user-tweets`,{
         headers:{
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
+          // Authorization: `Bearer ${userToken}`,
         },
       })
       if (res.ok) {

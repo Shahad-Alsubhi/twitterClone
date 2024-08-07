@@ -7,35 +7,26 @@ const UserProvider = ({ children }) => {
   const initUser=localStorage.getItem("user")
 
   const [userToken,setUserToken]=useState(initUser?initUser:"");
-
-  let profileData=getdata()
-
-  // const [userId,setUserId]=useState("")
-  // const [likedTweets,setLikedTweets]=useState([])
-  // const [update,setUpdate]=useState(false)
-  
-  function getdata(){ 
-    if(userToken){ 
-      const decoded= jwtDecode(userToken);
-      const {profileData,userId}=decoded
-      console.log(profileData,"inside")
-      // setUserId(userId)
-      return profileData
-   
-     } }
-
+  const [profileData,setProfileData]=useState("")
+  const [userId,setUserId]=useState("")
      
   useEffect(()=>{
-    
-     getdata()
+    function getdata(){ 
+      if(userToken){
+
+        const decoded= jwtDecode(userToken);
+        const {profileData,userId}=decoded
+         setProfileData(profileData)
+          setUserId(userId)
+       } }
+  getdata()
 
   },[userToken])
 
-  console.log("render from context")
 
 
   return (
-    <UserContext.Provider value={{setUserToken,userToken,profileData,}}>
+    <UserContext.Provider value={{setUserToken,userToken,profileData,userId}}>
         {children}
     </UserContext.Provider>
       

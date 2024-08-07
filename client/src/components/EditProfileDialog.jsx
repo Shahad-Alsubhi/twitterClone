@@ -6,21 +6,22 @@ import UserController from "../controllers/userController";
 
 const EditProfileDialog = () => {
   const {profileData}=useContext(UserContext)
-  // const profileData={
-  //   name:"d",bio:"ui",profilePicture:"jk",headerPicture:"lk"
-  // }
+  
   const [profile,setProfile]=useState({
     name:profileData.name,
     bio:profileData.bio,
     headerPicture:profileData.header_picture_url,
     profilePicture:profileData.profile_picture_url
   })
+
+
+
   const [headerFile,setHeaderFile]=useState("")
   const [avatarFile,setAvatarFile]=useState("")
 
   const {handleUpdateProfile}=UserController()
 
-  const handleSubmit=(e)=>{
+  const handleSubmit=async (e)=>{
     e.preventDefault()
     const formData=new FormData()
     formData.append('name',profile.name)
@@ -28,10 +29,9 @@ const EditProfileDialog = () => {
     formData.append('headerPicture',headerFile)
     formData.append('profilePicture',avatarFile)
     
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-    handleUpdateProfile(formData);
+   await handleUpdateProfile(formData);
+   document.getElementById("EditProfile").close()
+
   }
 
   const handleChange = (e) => {
@@ -79,6 +79,7 @@ const EditProfileDialog = () => {
            </label>
               <input type="file" id="headerPicture" name="headerPicture" className="hidden" onChange={handleChange} />
            </div>
+           {/* avatar */}
            <div className="-mt-16 ml-6 relative w-fit">
            <Avatar style={"w-[6rem] h-full"} img={profile.profilePicture} />
            <label htmlFor="avatarPicture" className="absolute left-[38%] top-[40%]" >

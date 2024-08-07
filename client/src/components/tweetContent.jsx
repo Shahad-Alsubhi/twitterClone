@@ -12,15 +12,13 @@ const TweetContent = ({newReply,style,reply,tweet}) => {
   const navigate = useNavigate();
 
 
-
-
-  return (<div onClick={()=>{navigate('/home/tweets/tweet', { state: { tweet } }); }} className={`flex flex-row w-full ${style} border-custom-border-color pb-1 ${newReply ? "min-h-28" :"min-h-fit" } ${reply?"p-4":"p-0"} `}>
+  return (<div  className={`flex flex-row w-full ${style} border-custom-border-color pb-1 ${newReply ? "min-h-28" :"min-h-fit" } ${reply?"p-4":"p-0"} `}>
     <div className="flex flex-col items-center">
-    <Avatar img={tweet?tweet.created_by.profile_picture_url:""}/>
+    <Avatar img={tweet?tweet.created_by.profile_picture_url:""} userId={tweet?tweet.created_by._id:""}/>
     {(newReply||reply)&&
     <div className="w-[1px] bg-custom-gray h-full "></div>}
     </div>
-    <div className="flex flex-col ml-2 w-full ">
+    <div className="flex flex-col ml-2 w-full " onClick={()=>{navigate('/home/tweets/tweet', { state: { tweet } }); }}>
 
         <div className="flex flex-row gap-x-1">
             <h3 className="text-sm font-bold">{tweet?tweet.created_by.name:""}</h3>

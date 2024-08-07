@@ -6,17 +6,19 @@ import { useContext, useEffect, useState } from 'react';
 import TweetController from '../controllers/TweetController.js';
 import TweetContent from './tweetContent';
 import { UserContext } from '../context/userContext.jsx';
+import { LikedTweetsContext } from '../context/LikeTweetContext.jsx';
+import { useParams } from 'react-router-dom';
 
 
 export default function ProfileNav() {
-  console.log("render")
+  const {userId}=useParams()
   const [value, setValue] = useState(0);
   const [tweets,setTweets]=useState([])
-  const {getUserTweets,getLikedTweets} =TweetController()
-  // const {likedTweets}=useContext(UserContext)
+  const {getUserTweets} =TweetController()
+  const {likedTweets}=useContext(LikedTweetsContext)
+  const {profileData,userId:Context_userId}=useContext(UserContext)
 
   
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -25,18 +27,17 @@ export default function ProfileNav() {
   useEffect( ()=>{
     async function fetchData() {
       if(value==0||value==1){
-     const tweets= await getUserTweets()
+      const tweets= await getUserTweets(userId)
       setTweets(tweets)
-    }
-    else{
-    const tweets= await getLikedTweets()
-      setTweets(tweets)
-
     }
     }
     fetchData();
 
-  },[value])
+  },[value,profileData,userId])
+  
+  useEffect(()=>{
+    setValue(0)
+  },[userId])
 
   return (
     <Box sx={{ width: '100%', maxWidth:"656px", padding:"0" }}
@@ -50,13 +51,14 @@ export default function ProfileNav() {
         }} />
           <Tab label="Replise" sx={{fontSize:"15px",textTransform:"capitalize",color:"#71767b", fontWeight:"600",minWidth:"0",maxWidth:"97px", ":focus":{color:"white", fontWeight:"900"}, 
         }} />
+        {Context_userId==userId&&
           <Tab label="Likes"  sx={{fontSize:"15px",textTransform:"capitalize",color:"#71767b", fontWeight:"600",minWidth:"0",maxWidth:"97px", ":focus":{color:"white", fontWeight:"900"}, 
-        }}/>
+        }}/>}
         </Tabs>
       </Box>
 
 
-        {value==0&& tweets.length>0&& tweets
+        {value==0 && tweets.length>0 && tweets
   .filter(tweet => tweet.type === "tweet")
   .map(tweet => (
     <Tweet key={tweet._id} tweet={tweet} />
@@ -75,10 +77,10 @@ export default function ProfileNav() {
         }
 
 
-      {/* {value==2 && tweets.length>0&& tweets.map(tweet => (
-    <Tweet key={tweet._id} tweet={tweet.tweet} />
+     {value==2 && likedTweets.length>0 && likedTweets.map(like => (
+    <Tweet key={like._id} tweet={like.tweet} />
   ))
-        } */}
+        }  
 
 
 

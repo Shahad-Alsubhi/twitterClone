@@ -24,7 +24,7 @@ const AddComment = () => {
             <TweetContent tweet={tweet} newReply={true}/>
 
             <div className='flex items-start gap-3 mb-8 p-4 pt-0 pl-0'>
-              <Avatar tweet={tweet} img={profileData.profile_picture_url}/>
+              <Avatar tweet={tweet} img={profileData?profileData.profile_picture_url:""}/>
             <textarea  placeholder="Post your reply" rows={3} type="text" className=" w-full text-lg font-extralight  border-none outline-none placeholder:text-base  bg-transparent mt-2" {...register("content_text",{required:"tweet can not be empty"})}  >
               </textarea>
               <p className="mt-1 text-[#e25858]">{errors.name?.message}</p>

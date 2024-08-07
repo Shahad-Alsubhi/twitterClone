@@ -6,7 +6,6 @@ import Tweet from "../models/tweet.js";
 import Retweet from "../models/retweet.js";
 
 const createTweet = async (req, res) => {
-  console.log(req.body)
   try {
     const { type, parent_tweet, content_text, content_images_urls } = req.body;
     if (!content_text && !content_images_urls) {
@@ -57,6 +56,7 @@ const createTweet = async (req, res) => {
   }
 };
 
+//
 const getAllTweets = async (req, res) => {
   try {
       const tweets = await Tweet.find().sort({
@@ -96,9 +96,11 @@ const getFollowingTweets = async (req, res) => {
   }
 };
 
+//
 const getUserTweets = async (req, res) => {
   try {
-    const tweets = await Tweet.find({ created_by: req.user._id }).sort({
+    const {userId}=req.params
+    const tweets = await Tweet.find({ created_by: userId }).sort({
       created_at: -1,
     }).populate("created_by").populate({
       path: 'parent_tweet', 
@@ -117,6 +119,7 @@ const getUserTweets = async (req, res) => {
   }
 };
 
+//
 const getTweetComments = async (req, res) => {
   try {
     const { tweetId } = req.params;
@@ -188,7 +191,6 @@ const saveTweet = async (req, res) => {
 
 const likeTweet = async (req, res) => {
   try {
-    console.log("like");
     const { tweetId } = req.params;
     const likedTweet = await Like.findOne({
       user_id: req.user._id,
@@ -232,8 +234,7 @@ const retweet = async (req, res) => {
       tweet: tweetId,
     });
     if (retweeted) {
-      const x = await Retweet.findByIdAndDelete(retweeted._id);
-      console.log(x);
+      await Retweet.findByIdAndDelete(retweeted._id);
       return res
         .status(200)
         .json({ message: "removed a retweet successfully" });
@@ -277,6 +278,7 @@ const savedTweets = async (req, res) => {
   }
 };
 
+//
 const likedTweets = async (req, res) => {
   try {
     const tweets = await Like.find({ user_id: req.user._id }).sort({

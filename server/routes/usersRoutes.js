@@ -30,8 +30,7 @@ router.post("/forgot-password", forgotPassword);
 
 router.post("/reset-password/:token", resetPassword);
 
-// router.get("/:userId/profile", getProfileData);
-router.get("/profile",requireLogin, getProfileData);
+router.get("/:userId/profile", getProfileData);
 
 router.get("/notifications", requireLogin, getUserNotifications);
 

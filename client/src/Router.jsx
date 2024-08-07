@@ -28,7 +28,7 @@ const Router = createBrowserRouter([
         element:<IndividualTweet/>
       },
     {
-      path:"/home/profile",
+      path:`/home/:userId/profile`,
       element:<ProfilePage/>
     },
     {

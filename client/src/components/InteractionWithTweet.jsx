@@ -1,30 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import { TweetContext } from "../context/tweetContext";
-import { UserContext } from "../context/userContext";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import TweetController from "../controllers/TweetController";
 
 
 
-const InteractionWithTweet =  ({individual,style,tweet}) => {
+const InteractionWithTweet =  ({individual,style,tweet,liked}) => {
   const {setTweet}=useContext(TweetContext)
-  const {likeTweet,getLikedTweets}=TweetController()
-  // console.log(getLikedTweets,likeTweet)
-  const [likedTweets,setLikedTweets]=useState([])
-  // const likedTweets=await getLikedTweets
-  useEffect(()=>{
-    async function fetchData(){
-        const likedTweets=await getLikedTweets()
-        setLikedTweets(likedTweets)
-
-
-    }
-    fetchData()
-  },[])
-
-  console.log(likedTweets)
-
-  const liked=likedTweets.some((like)=> like.tweet._id==tweet._id)
+  const {likeTweet}=TweetController()
+ 
 
   return (
     <div className={`flex flex-row justify-between items-center h-8 p-4  pr-0   ${style} pl-10  `}>

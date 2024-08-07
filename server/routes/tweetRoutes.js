@@ -21,9 +21,7 @@ router.get("/", getAllTweets);
 
 router.get("/following-tweets", requireLogin, getFollowingTweets);
 
-// router.get("/:userId/tweets", requireLogin, getUserTweets);
-router.get("/user-tweets", requireLogin, getUserTweets);
-
+router.get("/:userId/user-tweets", getUserTweets);
 
 router.get("/:tweetId/comments", getTweetComments);
 

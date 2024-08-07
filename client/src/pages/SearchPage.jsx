@@ -38,7 +38,7 @@ const SearchPage = ({style
     <div>
       {searchResult.map(result=>(
         <div key={result._id} className='flex flex-row gap-3 mb-3'>
-        <Avatar img={result.profile_picture_url}/>
+        <Avatar img={result.profile_picture_url} userId={result._id}/>
         <div className="">
         <h1 className='font-bold'>{result.name}</h1>
         <h5 className='text-custom-gray'>@{result.username}</h5>

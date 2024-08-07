@@ -6,8 +6,6 @@ import Tweet from '../components/Tweet';
 import Avatar from '../components/Avatar';
 import LogoWhite from '../assets/logoWhite.png'
 import TweetController from '../controllers/TweetController.js';
-import { Link } from 'react-router-dom';
-// import UserController from '../controllers/userController.js';
 import { UserContext } from '../context/userContext.jsx';
 
 
@@ -17,7 +15,8 @@ const TweetsContainer = () => {
   const [value, setValue] = useState(0);
   const [tweets,setTweets]=useState([]);
   const {getAllTweets,getFollowingTweets}=TweetController()
-  const {profileData}=useContext(UserContext)
+  const {profileData,userId}=useContext(UserContext)
+
 
 
   const handleChange = async (event, newValue) => {
@@ -35,11 +34,10 @@ const TweetsContainer = () => {
 
 
   return (
-    <><div className='flex flex-row justify-center relative pt-4 pb-7 min-[500px]:hidden'>
-    <Link className='flex flex-row gap-3 items-center' to={"/home/profile"}>
+    <>
+    <div className='flex flex-row justify-center relative pt-4 pb-7 min-[500px]:hidden'>
 
-    <div className='absolute left-4 top-3'><Avatar img={ profileData.profile_picture_url}/></div>
-    </Link>
+    <div className='absolute left-4 top-3'><Avatar img={ profileData?profileData.profile_picture_url:""} userId={userId?userId:""}/></div>
     <img src={LogoWhite} alt="" className='w-5 h-5' />
 </div>
     <Box sx={{  borderBottom:"solid #252424 1px", maxWidth:"665px" }}>

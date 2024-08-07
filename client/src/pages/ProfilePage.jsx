@@ -3,17 +3,34 @@ import EditProfileDialog from "../components/EditProfileDialog";
 import ProfileNav from "../components/ProfileNav"
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserController from "../controllers/userController";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext";
 
 
 const ProfilePage = () => {
-  console.log("render profile")
-  const {profileData}=useContext(UserContext)
-  console.log(profileData)
-  
+
+  const {userId}=useParams()
+  const {getProfileData}=UserController()
+  const [profileData,setProfileData]=useState("")
+
+  const {userId:Context_userId,profileData:Context_profileData}=useContext(UserContext)
+
+
+  useEffect(()=>{
+   
+    async function fetchData() {
+      if(userId==Context_userId){
+        setProfileData(Context_profileData)
+      }
+      else{
+    const profileData=await getProfileData(userId)
+    setProfileData(profileData)
+    }}
+    fetchData();
+
+  },[userId,Context_profileData])
 
 
   const date = new Date(profileData.joined_at);
@@ -28,7 +45,7 @@ const ProfilePage = () => {
             </h1>
            </div>
            <div className="max-h-[38rem] ">
-             <div className={`bg-slate-500 h-full min-h-44 sm:min-h-40 max-h-48  overflow-hidden bg-cover	`} style={{ backgroundImage: `url(${profileData.profile_picture_url})` }}> 
+             <div className={`bg-slate-500 h-full min-h-44 sm:min-h-40 max-h-48  overflow-hidden bg-cover	`} style={{ backgroundImage: `url(${profileData.header_picture_url})` }}> 
               </div> 
               <div className="absoulte -mt-9 ml-5 w-[4.5rem] h-[4.5rem] sm:w-24 sm:-mt-12 md:w-[6.5rem] md:-mt-14"> 
                  <Avatar style={"w-full h-full"} 
@@ -36,7 +53,9 @@ const ProfilePage = () => {
                  /> 
               </div>
             <div className="p-4 sm:pt-8 md:pt-14 shrink relative ">
-                <button className="border-custom-gray border-[1px] w-28 absolute max-sm:-mt-4 top-0 right-5" onClick={()=>{document.getElementById("EditProfile").showModal()}}>Edit profile</button>
+            {Context_userId==userId? <button className="border-custom-gray border-[1px] w-28 absolute max-sm:-mt-4 top-0 right-5" onClick={()=>{document.getElementById("EditProfile").showModal()}}>Edit profile</button>
+                :<button className="border-custom-gray border-[1px] bg-white text-black w-28 absolute max-sm:-mt-4 top-0 right-5" >Follow</button>}
+
                 <h2 className="text-xl font-bold ">  
                    {profileData?profileData.name:""} 
                 </h2>
@@ -47,8 +66,7 @@ const ProfilePage = () => {
                 <p className="mb-2">
                   {profileData?profileData.bio:""}
                 </p>
-                <h4 className="text-custom-gray mb-3 font-extralight text-base">Joined  
-                   {formattedDate}
+                <h4 className="text-custom-gray mb-3 font-extralight text-base">Joined {formattedDate}
                    </h4> 
 
                 <div className="flex flex-row gap-5">

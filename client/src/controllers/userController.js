@@ -81,14 +81,15 @@ const handleSetNewPassword=async(data,token)=>{
 
 }
 
-const getProfileData=async ()=>{
-    const res =await fetch("https://twitterclone-wln9.onrender.com/users/user/profile",{
+const getProfileData=async (userId)=>{
+    const res =await fetch(`http://localhost:5550/users/user/${userId}/profile`,{
         headers:{"Content-Type":"application/json",
-        Authorization: `Bearer ${userToken}`,
+        // Authorization: `Bearer ${userToken}`,
         },
     })
     const response=await res.json()
     if(res.ok){
+        
         return response.profileData
 
     }
@@ -106,41 +107,19 @@ const getSearchResults=async (searchTerm)=>{
 }
 
 const handleUpdateProfile=async(formData)=>{
-    console.log("inside update",formData)
-    for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-
-    // console.log("stringify",JSON.stringify(formData))
-    // console.log("inside update",formData)
-
-
-
-
-    // const {
-    //     name,
-    //     bio,
-    //     headerPicture,
-    //     profilePicture     
-    //   }=data
-    //   console.log(
-    //     name,
-    //     bio,
-    //     headerPicture,
-    //     profilePicture     
-    //   )
-
-
     const res=await fetch('http://localhost:5550/users/user/update-profile',{
         headers:{
             Authorization: `Bearer ${userToken}`,
-
         },
         method:"PATCH",
         body:formData
     })
     const response=await res.json()
-    console.log(response)
+    if(res.ok){
+        localStorage.setItem("user",response.token)
+        setUserToken(response.token)
+    }
+
 }
 
 

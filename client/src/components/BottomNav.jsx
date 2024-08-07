@@ -20,8 +20,9 @@ import { UserContext } from '../context/userContext';
     export default  function BottomNav() {
       const matches = useMediaQuery('(min-width:1200px)');
       const [value, setValue] = useState(0);
-      const {profileData}=useContext(UserContext)
-      const {search,setSearch}=useContext(SearchContext)
+      const {profileData,userId}=useContext(UserContext)
+      const {setSearch}=useContext(SearchContext)
+
     
       return (
 
@@ -38,13 +39,13 @@ import { UserContext } from '../context/userContext';
    
             <BottomNavigationAction  sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px", color:"white" ,'@media (max-width:500px)':{display:"none"} }} icon={ <img src={LogoWhite} alt="" className='w-5 h-5' />}  />
             <BottomNavigationAction label={matches? "Home": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px", color:"white",display:"flex" ,flexDirection:"row", gap:"20px",justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem',opacity: 1 }
-                }} icon={<HomeIcon sx={{fontSize:"28px" }} />}  component={Link}  to={"/home/tweets"} onClick={()=>{setSearch(true);console.log(search)}}
+                }} icon={<HomeIcon sx={{fontSize:"28px" }} />}  component={Link}  to={"/home/tweets"} onClick={()=>{setSearch(true);}}
                 />
             <BottomNavigationAction label={matches?"Search": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px", color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' ,opacity: 1}
-                }} icon={<SearchIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/search"}     onClick={()=>{setSearch(false);console.log(search)} } />
+                }} icon={<SearchIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/search"}     onClick={()=>{setSearch(false);} } />
                
             <BottomNavigationAction label={matches?"Notifications": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px",color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' }
-                }} showLabel icon={<NotificationsOutlinedIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/notifications"} onClick={()=>{setSearch(true);console.log(search)}} />
+                }} showLabel icon={<NotificationsOutlinedIcon sx={{fontSize:"28px"}}/>} component={Link}  to={"/home/notifications"} onClick={()=>{setSearch(true);}} />
             <BottomNavigationAction label={matches?"Messages": undefined} sx={{ padding: 0, minWidth:"28px" ,maxWidth:"28px" ,color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' }
                 }} showLabel icon={<EmailOutlinedIcon  sx={{fontSize:"28px"}}/>}  />
             <BottomNavigationAction label={matches?"Communities": undefined} sx={{ padding: 0 , minWidth:"28px" ,maxWidth:"28px", color:"white",display:"flex" ,flexDirection:"row", gap:"20px" ,justifyContent:"flex-start",'& .MuiBottomNavigationAction-label': { fontSize: '1.2rem' }
@@ -57,14 +58,11 @@ import { UserContext } from '../context/userContext';
 
 
 
-          <Link className='flex flex-row gap-3 items-center' to={"/home/profile"}>
-
-          {/* <Avatar img={ profileData.profile_picture_url}/> */}
-          <div className="max-xl:hidden">
+          <Avatar img={ profileData?profileData.profile_picture_url:""} userId={userId?userId:""}/>
+          <div className="max-xl:hidden -ml-1">
           <h1 className='font-bold'>{profileData? profileData.name:""}</h1>
           <h5 className='text-custom-gray'>@{profileData? profileData.username:""}</h5>
           </div>          
-          </Link>
 
           </div>
           </div>

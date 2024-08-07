@@ -218,9 +218,9 @@ const resetPassword = async (req, res) => {
 };
 
 const getProfileData = async (req, res) => {
-  
+  const {userId}=req.params
   try {
-    const profileData = await User.findById(req.user._id).select(
+    const profileData = await User.findById(userId).select(
       "username joined_at name bio header_picture_url profile_picture_url"
     );
     return res
@@ -292,7 +292,6 @@ const followUser = async (req, res) => {
       follower_id: req.user._id,
       following_id: followingId,
     });
-    console.log(followRelation);
     if (!followRelation) {
       await Follow.create({
         follower_id: req.user._id,
@@ -320,10 +319,8 @@ const getSearchResults=async(req,res)=>{
     const { searchTerm } = req.params;
     const results= await User.find( { $or: [{name:{$regex:searchTerm,$options:"i"}},{username:{$regex:searchTerm,$options:"i"}}]})
     return res.status(200).json({results})
-
-  
 } catch (e) {
-  console.error("fetch following error:", e);
+  console.error("search error:", e);
   return res
     .status(500)
     .json({ message: "something went wrong, Please try again later." });
@@ -331,16 +328,41 @@ const getSearchResults=async(req,res)=>{
 }
 
 const updateProfile=async(req,res)=>{
+  try{
   const {name,bio}=req.body
-  console.log(req.user._id,"//",req.body,"//",req.files);
+  
+  const profile_picture_url= req.files['profilePicture']?req.files['profilePicture'][0].path:null
+  const header_picture_url= req.files['headerPicture']?req.files['headerPicture'][0].path:null
 
-  const profile_picture_url= req.files['profilePicture'][0].path
-  const header_picture_url= req.files['headerPicture'][0].path
-  console.log(req.user._id)
+  const updateFields = {};
+if (name) updateFields.name = name;
+     updateFields.bio = bio;
+     if (profile_picture_url) updateFields.profile_picture_url = profile_picture_url;
+if (header_picture_url) updateFields.header_picture_url = header_picture_url;
 
-  await User.findByIdAndUpdate(req.user._id, { $set: { name,bio,profile_picture_url,header_picture_url }})
-  // console.log(name,bio,profile_picture_url.path,header_picture_url.path)
-  res.status(200).json({message:"updated"})
+  await User.findByIdAndUpdate(req.user._id, { $set: updateFields})
+
+  const token = jwt.sign({ userId: req.user._id,profileData:{
+    username:req.user.username,
+    joined_at:req.user.joined_at,
+    name,
+    bio,
+    header_picture_url:header_picture_url?header_picture_url:req.user.header_picture_url,
+    profile_picture_url:profile_picture_url?profile_picture_url:req.user.header_picture_url,
+  } }, process.env.SECRET, {
+    expiresIn: "10h",
+  });
+
+ return res.status(200).json({message:"profile updated successfully",token})
+
+}
+
+catch (e) {
+  console.error("update profile error:", e);
+  return res
+    .status(500)
+    .json({ message: "something went wrong, Please try again later." });
+}
   
 }
 

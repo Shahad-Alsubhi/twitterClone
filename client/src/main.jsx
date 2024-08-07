@@ -6,14 +6,17 @@ import React from 'react'
 import UserProvider from './context/userContext'
 import TweetProvider from './context/tweetContext'
 import SearchProvider from './context/searchContext'
+import LikedTweetsProvider from './context/LikeTweetContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserProvider>
       <TweetProvider>
+        <LikedTweetsProvider>
         <SearchProvider>
   <RouterProvider router={Router}/>
-  </SearchProvider>
+  </SearchProvider> 
+  </LikedTweetsProvider>
   </TweetProvider>
   </UserProvider>
 </React.StrictMode>,

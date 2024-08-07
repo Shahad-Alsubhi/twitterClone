@@ -8,7 +8,6 @@ import TweetController from "../controllers/TweetController";
 
 
 const IndividualTweet = () => {
- 
   const location = useLocation();
   const tweet = location.state?.tweet;
   const [tweets,setTweets]=useState([])
@@ -21,7 +20,7 @@ const IndividualTweet = () => {
       setTweets(tweets)
     }
     fetchData();
-  },[tweet])
+  },[])
   
     return (
     <div className="border-custom-border-color border-[1px] w-full max-w-[41rem] h-screen border-b-0 ">
@@ -35,9 +34,9 @@ const IndividualTweet = () => {
         <Tweet style="border-t-[1px] border-custom-border-color mt-2" individual={true} tweet={tweet} />
 
         {/* comments */}
-        {tweets.map(tweet=>(
+       {tweets.map(tweet=>(
           <Tweet tweet={tweet} key={tweet._id}/>
-        ))}
+        ))} 
         
 
       
