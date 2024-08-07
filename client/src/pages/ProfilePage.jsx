@@ -10,12 +10,12 @@ import { UserContext } from "../context/userContext";
 
 
 const ProfilePage = () => {
-
+   console.log("render profile")
   const {userId}=useParams()
   const {getProfileData}=UserController()
   const [profileData,setProfileData]=useState("")
-
   const {userId:Context_userId,profileData:Context_profileData}=useContext(UserContext)
+
 
 
   useEffect(()=>{

@@ -56,12 +56,11 @@ const createTweet = async (req, res) => {
   }
 };
 
-//
 const getAllTweets = async (req, res) => {
   try {
       const tweets = await Tweet.find().sort({
         created_at: -1,
-      }).populate('created_by');
+      }).populate({path:'created_by',select:"username joined_at name bio header_picture_url profile_picture_url"});
       return res
         .status(200)
         .json({ message: "fetched all tweets successfully", tweets });
@@ -96,7 +95,6 @@ const getFollowingTweets = async (req, res) => {
   }
 };
 
-//
 const getUserTweets = async (req, res) => {
   try {
     const {userId}=req.params
@@ -104,9 +102,7 @@ const getUserTweets = async (req, res) => {
       created_at: -1,
     }).populate("created_by").populate({
       path: 'parent_tweet', 
-      populate: {
-        path: 'created_by', 
-      }
+      populate:{path:'created_by',select:"username joined_at name bio header_picture_url profile_picture_url"}
     });
     return res
       .status(200)
@@ -119,7 +115,6 @@ const getUserTweets = async (req, res) => {
   }
 };
 
-//
 const getTweetComments = async (req, res) => {
   try {
     const { tweetId } = req.params;
@@ -128,7 +123,7 @@ const getTweetComments = async (req, res) => {
       type: "comment",
     }).sort({
       created_at: -1,
-    }).populate("created_by");
+    }).populate({path:'created_by',select:"username joined_at name bio header_picture_url profile_picture_url"});
     return res
       .status(200)
       .json({ message: "fetched tweets successfully", tweets });
@@ -148,7 +143,7 @@ const getTweetQuotes = async (req, res) => {
       type: "quote",
     }).sort({
       created_at: -1,
-    });
+    }).populate({path:'created_by',select:"username joined_at name bio header_picture_url profile_picture_url"});
     return res
       .status(200)
       .json({ message: "fetched tweets successfully", tweets });
@@ -278,16 +273,13 @@ const savedTweets = async (req, res) => {
   }
 };
 
-//
 const likedTweets = async (req, res) => {
   try {
     const tweets = await Like.find({ user_id: req.user._id }).sort({
       created_at: -1,
     }).populate({
       path: 'tweet',      
-      populate: {
-        path: 'created_by', 
-      }
+      populate: {path:'created_by',select:"username joined_at name bio header_picture_url profile_picture_url"}
     })
     return res
       .status(200)
