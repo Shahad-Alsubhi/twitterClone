@@ -82,7 +82,7 @@ const getFollowingTweets = async (req, res) => {
     });
     const tweets = await Tweet.find({
       created_by: { $in: arr },
-    }).sort({ created_at: -1 });
+    }).sort({ created_at: -1 }).populate({path:'created_by',select:"username joined_at name bio header_picture_url profile_picture_url"});
 
     return res
       .status(200)

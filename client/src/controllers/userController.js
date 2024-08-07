@@ -6,6 +6,7 @@ import { UserContext } from "../context/userContext"
 const UserController=()=>{
 
 const [errorMessage,setErrorMessage]=useState("")
+const [loading,setLoading]=useState(false)
 const [successfulMessage,setSuccessfulMessage]=useState("")
 
 const { userToken,setUserToken } = useContext(UserContext)
@@ -13,12 +14,14 @@ const navigate=useNavigate()
 
 
 const handleLogin=async (data)=>{
+    setLoading(true)
   await  fetch("https://twitterclone-wln9.onrender.com/users/user/login",{
         method:"post",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
     }).then(async (res)=>{
         const response=await res.json();
+        setLoading(false)
         if(!res.ok){
             setErrorMessage(response.message);
         }else{
@@ -30,12 +33,14 @@ const handleLogin=async (data)=>{
 }
 
 const handleSignup=async (data)=>{
+    setLoading(true)
     await  fetch("https://twitterclone-wln9.onrender.com/users/user/signup",{
           method:"post",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify(data)
       }).then(async (res)=>{
           const response=await res.json();
+          setLoading(false)
           if(!res.ok){
               setErrorMessage(response.message);
           }else{
@@ -47,12 +52,14 @@ const handleSignup=async (data)=>{
 }
 
 const handleResetPassword=async(data)=>{
+    setLoading(true)
     await fetch("https://twitterclone-wln9.onrender.com/users/user/forgot-password",{
         method:"post",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
     }).then(async(res)=>{
         const response=await res.json()
+        setLoading(false)
         if(!res.ok){
             setErrorMessage(response.message);
         }else{
@@ -107,6 +114,7 @@ const getSearchResults=async (searchTerm)=>{
 }
 
 const handleUpdateProfile=async(formData)=>{
+    setLoading(true)
     const res=await fetch('https://twitterclone-wln9.onrender.com/users/user/update-profile',{
         headers:{
             Authorization: `Bearer ${userToken}`,
@@ -115,6 +123,8 @@ const handleUpdateProfile=async(formData)=>{
         body:formData
     })
     const response=await res.json()
+    setLoading(false)
+
     if(res.ok){
         localStorage.setItem("user",response.token)
         setUserToken(response.token)
@@ -122,17 +132,30 @@ const handleUpdateProfile=async(formData)=>{
 
 }
 
+const followUser=async (userId)=>{
+
+    await fetch(`https://twitterclone-wln9.onrender.com/users/user/follow/${userId}`,{
+        headers:{
+            Authorization: `Bearer ${userToken}`,
+        },
+        method:"post",
+    })
+
+
+
+}
+
 
 return{
     handleLogin,
-    errorMessage,
+    errorMessage,loading,
     handleResetPassword,
     successfulMessage,
     handleSignup,
     handleSetNewPassword,
     getProfileData,
     getSearchResults,
-    handleUpdateProfile
+    handleUpdateProfile,followUser
 }
 }
 export default UserController;

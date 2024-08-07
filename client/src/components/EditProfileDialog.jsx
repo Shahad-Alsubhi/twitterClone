@@ -3,6 +3,7 @@ import Avatar from "./Avatar";
 import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
 import { UserContext } from "../context/userContext";
 import UserController from "../controllers/userController";
+import { CircularProgress } from "@mui/material";
 
 const EditProfileDialog = () => {
   const {profileData}=useContext(UserContext)
@@ -19,7 +20,7 @@ const EditProfileDialog = () => {
   const [headerFile,setHeaderFile]=useState("")
   const [avatarFile,setAvatarFile]=useState("")
 
-  const {handleUpdateProfile}=UserController()
+  const {handleUpdateProfile,loading}=UserController()
 
   const handleSubmit=async (e)=>{
     e.preventDefault()
@@ -68,19 +69,22 @@ const EditProfileDialog = () => {
       
 
         <div className="hero-content flex-col pt-2" >
+        {loading&&  <CircularProgress sx={{position:"absolute", top:"40%" ,zIndex:"8"}}/>}
 
             <form className="card-body p-0 w-full min-h-56 pt-4 justify-between" encType="multipart/form-data"  onSubmit={handleSubmit}>
             <button className=" bg-white rounded-full outline-none min-h-0 h-8 text-black absolute right-3 top-3  w-fit" type="submit"  >Save</button>
 
             {/* header */}
             <div className={` h-full min-h-44 sm:min-h-40 max-h-48  overflow-hidden bg-cover	relative`} style={{ backgroundImage: `url(${profile.headerPicture})` }}>
-            <label htmlFor="headerPicture" className="absolute left-[49%] top-[40%]">
-            <FilterCenterFocusIcon className="cursor-pointer" />
+            <label htmlFor="headerPicture" className="absolute left-[49%] top-[40%] ">
+            <FilterCenterFocusIcon className="cursor-pointer " />
            </label>
               <input type="file" id="headerPicture" name="headerPicture" className="hidden" onChange={handleChange} />
            </div>
+
            {/* avatar */}
            <div className="-mt-16 ml-6 relative w-fit">
+            
            <Avatar style={"w-[6rem] h-full"} img={profile.profilePicture} />
            <label htmlFor="avatarPicture" className="absolute left-[38%] top-[40%]" >
             <FilterCenterFocusIcon className="cursor-pointer" />
@@ -90,7 +94,7 @@ const EditProfileDialog = () => {
            {/* name */}
             <input type="text" placeholder="name" name="name" value={profile.name} className=" mt-6 max-w-full text-lg font-extralight border-[1px] border-custom-border-color outline-none h-16 p-4 bg-transparent placeholder:text-lg" onChange={handleChange}  />
            {/* bio */}
-           <textarea   placeholder="Bio" rows={4} type="text" name="bio" value={profile.bio} onChange={handleChange}  className=" w-full text-lg font-extralight  p-4  mb-14  rounded-none border-[1px] border-custom-border-color outline-none placeholder:text-lg  bg-transparent  mt-5"  >
+           <textarea   placeholder="Bio" rows={4} type="text" name="bio" value={profile.bio?profile.bio:""} onChange={handleChange}  className=" w-full text-lg font-extralight  p-4  mb-14  rounded-none border-[1px] border-custom-border-color outline-none placeholder:text-lg  bg-transparent  mt-5"  >
            </textarea>
               
       

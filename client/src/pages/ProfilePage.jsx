@@ -12,7 +12,7 @@ import { UserContext } from "../context/userContext";
 const ProfilePage = () => {
    console.log("render profile")
   const {userId}=useParams()
-  const {getProfileData}=UserController()
+  const {getProfileData,followUser}=UserController()
   const [profileData,setProfileData]=useState("")
   const {userId:Context_userId,profileData:Context_profileData}=useContext(UserContext)
 
@@ -54,7 +54,7 @@ const ProfilePage = () => {
               </div>
             <div className="p-4 sm:pt-8 md:pt-14 shrink relative ">
             {Context_userId==userId? <button className="border-custom-gray border-[1px] w-28 absolute max-sm:-mt-4 top-0 right-5" onClick={()=>{document.getElementById("EditProfile").showModal()}}>Edit profile</button>
-                :<button className="border-custom-gray border-[1px] bg-white text-black w-28 absolute max-sm:-mt-4 top-0 right-5" >Follow</button>}
+                :<button className="border-custom-gray border-[1px] bg-white text-black w-28 absolute max-sm:-mt-4 top-0 right-5" onClick={()=>{followUser(userId)}}>Follow</button>}
 
                 <h2 className="text-xl font-bold ">  
                    {profileData?profileData.name:""} 
@@ -64,7 +64,7 @@ const ProfilePage = () => {
                   @{profileData?profileData.username:""}
                 </h3>
                 <p className="mb-2">
-                  {profileData?profileData.bio:""}
+                  {profileData?profileData.bio:null}
                 </p>
                 <h4 className="text-custom-gray mb-3 font-extralight text-base">Joined {formattedDate}
                    </h4> 

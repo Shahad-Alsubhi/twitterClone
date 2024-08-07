@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
 import logoWhight from "../assets/logoWhite.png";
 import UserController from "../controllers/userController";
+import { CircularProgress } from "@mui/material";
 
 
 
 const ForgotPasswordDialog = () => {
     const {register,handleSubmit,formState:{errors}}=useForm()
-    const { errorMessage, handleResetPassword, successfulMessage}=UserController()
+    const { errorMessage, handleResetPassword, successfulMessage,loading}=UserController()
 
   return (
     <dialog id="ForgotPasswordForm" className={`modal max-sm:bg-black bg-[#5b708366]  `}>
@@ -18,6 +19,8 @@ const ForgotPasswordDialog = () => {
     <img src={logoWhight} alt="Logo" className=" w-8 h-8 flex-col"/>
       
         <form className={`card-body p-0 pt-6 ${successfulMessage? "hidden" : "visible"} `}>
+        {loading&&<CircularProgress sx={{position:"absolute", top:"50%", left:"45%" }}/>}
+
         <h1 className="text-2xl font-extrabold mb-3">Find your X account
         </h1> 
         <p className="pb-4">Enter the email associated with your account to change your password.</p>

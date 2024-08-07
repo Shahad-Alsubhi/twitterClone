@@ -345,7 +345,7 @@ if (header_picture_url) updateFields.header_picture_url = header_picture_url;
   const token = jwt.sign({ userId: req.user._id,profileData:{
     username:req.user.username,
     joined_at:req.user.joined_at,
-    name,
+    name:name?name:req.user.name,
     bio,
     header_picture_url:header_picture_url?header_picture_url:req.user.header_picture_url,
     profile_picture_url:profile_picture_url?profile_picture_url:req.user.header_picture_url,

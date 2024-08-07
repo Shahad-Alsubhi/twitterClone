@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import logoWhight from "../assets/logoWhite.png";
 import UserController from "../controllers/userController";
+import { CircularProgress } from '@mui/material';
+
 
 
 export default function Signup(){
   const {register,handleSubmit,formState:{errors}}=useForm()
-  const {handleSignup,errorMessage}=UserController()
+  const {handleSignup,errorMessage,loading}=UserController()
 
     return(
     <dialog id="Signup_form" className="modal max-sm:bg-black bg-[#5b708366] scrollbar-">
@@ -16,7 +18,8 @@ export default function Signup(){
 
   <div className="hero-content flex-col ">
   <img src={logoWhight} alt="Logo" className=" w-8 h-8 flex-col"/>
-    
+  {loading&&  <CircularProgress sx={{position:"absolute", top:"40%"}}/>}
+
       <form className="card-body pt-4 ">
       <h1 className="text-2xl font-extrabold mb-5">Create your account
       </h1> 
