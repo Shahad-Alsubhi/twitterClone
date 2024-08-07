@@ -29,7 +29,7 @@ const TweetController = () => {
      }
 
     const getUserTweets=async(userId)=>{
-      const res= await fetch(`http://localhost:5550/tweets/${userId}/user-tweets`,{
+      const res= await fetch(`https://twitterclone-wln9.onrender.com/tweets/${userId}/user-tweets`,{
         headers:{
           "Content-Type": "application/json",
           // Authorization: `Bearer ${userToken}`,

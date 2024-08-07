@@ -82,7 +82,7 @@ const handleSetNewPassword=async(data,token)=>{
 }
 
 const getProfileData=async (userId)=>{
-    const res =await fetch(`http://localhost:5550/users/user/${userId}/profile`,{
+    const res =await fetch(`https://twitterclone-wln9.onrender.com/users/user/${userId}/profile`,{
         headers:{"Content-Type":"application/json",
         // Authorization: `Bearer ${userToken}`,
         },
