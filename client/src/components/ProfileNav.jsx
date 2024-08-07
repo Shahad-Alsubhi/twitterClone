@@ -13,7 +13,7 @@ export default function ProfileNav() {
   const [value, setValue] = useState(0);
   const [tweets,setTweets]=useState([])
   const {getUserTweets,getLikedTweets} =TweetController()
-  const {likedTweets}=useContext(UserContext)
+  // const {likedTweets}=useContext(UserContext)
 
   
 
@@ -28,7 +28,11 @@ export default function ProfileNav() {
      const tweets= await getUserTweets()
       setTweets(tweets)
     }
+    else{
+    const tweets= await getLikedTweets()
+      setTweets(tweets)
 
+    }
     }
     fetchData();
 
@@ -52,7 +56,7 @@ export default function ProfileNav() {
       </Box>
 
 
-        {value==0&&tweets
+        {value==0&& tweets.length>0&& tweets
   .filter(tweet => tweet.type === "tweet")
   .map(tweet => (
     <Tweet key={tweet._id} tweet={tweet} />
@@ -60,7 +64,7 @@ export default function ProfileNav() {
         }
      
 
-      {value==1&&tweets
+      {value==1&& tweets.length>0&&tweets
   .filter(tweet => tweet.type === "comment")
   .map(tweet => (
     <>
@@ -71,10 +75,10 @@ export default function ProfileNav() {
         }
 
 
-      {value==2 && likedTweets.map(tweet => (
+      {/* {value==2 && tweets.length>0&& tweets.map(tweet => (
     <Tweet key={tweet._id} tweet={tweet.tweet} />
   ))
-        }
+        } */}
 
 
 

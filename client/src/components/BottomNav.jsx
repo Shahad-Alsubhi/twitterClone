@@ -59,7 +59,7 @@ import { UserContext } from '../context/userContext';
 
           <Link className='flex flex-row gap-3 items-center' to={"/home/profile"}>
 
-          <Avatar img={ profileData.profile_picture_url}/>
+          {/* <Avatar img={ profileData.profile_picture_url}/> */}
           <div className="max-xl:hidden">
           <h1 className='font-bold'>{profileData? profileData.name:""}</h1>
           <h5 className='text-custom-gray'>@{profileData? profileData.username:""}</h5>

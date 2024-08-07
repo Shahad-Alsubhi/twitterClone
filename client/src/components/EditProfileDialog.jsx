@@ -6,7 +6,9 @@ import UserController from "../controllers/userController";
 
 const EditProfileDialog = () => {
   const {profileData}=useContext(UserContext)
-
+  // const profileData={
+  //   name:"d",bio:"ui",profilePicture:"jk",headerPicture:"lk"
+  // }
   const [profile,setProfile]=useState({
     name:profileData.name,
     bio:profileData.bio,
@@ -19,13 +21,16 @@ const EditProfileDialog = () => {
   const {handleUpdateProfile}=UserController()
 
   const handleSubmit=(e)=>{
+    e.preventDefault()
     const formData=new FormData()
     formData.append('name',profile.name)
     formData.append('bio',profile.bio)
     formData.append('headerPicture',headerFile)
     formData.append('profilePicture',avatarFile)
-
-    e.preventDefault()
+    
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
     handleUpdateProfile(formData);
   }
 

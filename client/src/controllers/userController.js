@@ -106,6 +106,16 @@ const getSearchResults=async (searchTerm)=>{
 }
 
 const handleUpdateProfile=async(formData)=>{
+    console.log("inside update",formData)
+    for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+    // console.log("stringify",JSON.stringify(formData))
+    // console.log("inside update",formData)
+
+
+
 
     // const {
     //     name,
@@ -121,13 +131,13 @@ const handleUpdateProfile=async(formData)=>{
     //   )
 
 
-    const res=await fetch('https://twitterclone-wln9.onrender.com/users/user/update-profile',{
+    const res=await fetch('http://localhost:5550/users/user/update-profile',{
         headers:{
-            "Content-Type":"application/json",
             Authorization: `Bearer ${userToken}`,
+
         },
         method:"PATCH",
-        body:JSON.stringify(formData)
+        body:formData
     })
     const response=await res.json()
     console.log(response)

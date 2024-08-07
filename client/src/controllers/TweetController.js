@@ -3,16 +3,14 @@ import {UserContext} from "../context/userContext"
 
 
 const TweetController = () => {
-     const {userToken,setLikedTweets,update}=useContext(UserContext)
-  
-
-     useEffect( ()=>{
-      async function fetchData() {
-        const likedTweets=await getLikedTweets()
-        setLikedTweets(likedTweets)
-      }
-      fetchData();
-    },[update])
+     const {userToken}=useContext(UserContext)
+    //  useEffect( ()=>{
+    //   async function fetchData() {
+    //     const likedTweets=await getLikedTweets()
+    //     setLikedTweets(likedTweets)
+    //   }
+    //   fetchData();
+    // },[update])
 
     const getAllTweets=async ()=>{
      const res= await fetch("https://twitterclone-wln9.onrender.com/tweets")
