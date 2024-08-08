@@ -8,7 +8,7 @@ const LikedTweetsProvider = ({ children }) => {
 
   const {getLikedTweets}=TweetController()
   const [likedTweets,setLikedTweets]=useState([])
-  const [update,setUpdate]=useState([])
+  const [update,setUpdate]=useState(false)
   const {userId}=useContext(UserContext)
 
   useEffect(()=>{
@@ -21,7 +21,7 @@ const LikedTweetsProvider = ({ children }) => {
   },[update,userId])
 
   return (
-    <LikedTweetsContext.Provider value={{likedTweets,setUpdate}}>
+    <LikedTweetsContext.Provider value={{likedTweets,setUpdate,update}}>
         {children}
     </LikedTweetsContext.Provider>
       

@@ -7,10 +7,12 @@ import UserProvider from './context/userContext'
 import TweetProvider from './context/tweetContext'
 import SearchProvider from './context/searchContext'
 import LikedTweetsProvider from './context/LikeTweetContext'
+import UpdateTweetProvider from './context/updateTweets'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserProvider>
+      <UpdateTweetProvider>
       <TweetProvider>
         <LikedTweetsProvider>
         <SearchProvider>
@@ -18,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </SearchProvider> 
   </LikedTweetsProvider>
   </TweetProvider>
+  </UpdateTweetProvider>
   </UserProvider>
 </React.StrictMode>,
 )

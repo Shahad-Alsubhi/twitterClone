@@ -7,6 +7,7 @@ import Avatar from '../components/Avatar';
 import LogoWhite from '../assets/logoWhite.png'
 import TweetController from '../controllers/TweetController.js';
 import { UserContext } from '../context/userContext.jsx';
+import { UpdateTweetContext } from '../context/updateTweets.jsx';
 
 
 
@@ -16,6 +17,8 @@ const TweetsContainer = () => {
   const [tweets,setTweets]=useState([]);
   const {getAllTweets,getFollowingTweets}=TweetController()
   const {profileData,userId}=useContext(UserContext)
+  const {update}=useContext(UpdateTweetContext)
+
 
 
 
@@ -30,7 +33,7 @@ const TweetsContainer = () => {
     }
     fetchData();
 
-  },[value])
+  },[value,update])
 
 
   return (

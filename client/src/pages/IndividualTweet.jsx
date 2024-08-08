@@ -2,8 +2,9 @@ import { BottomNavigationAction } from "@mui/material"
 import Tweet from "../components/Tweet"
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TweetController from "../controllers/TweetController";
+import { UpdateTweetContext } from "../context/updateTweets";
 
 
 
@@ -12,6 +13,8 @@ const IndividualTweet = () => {
   const tweet = location.state?.tweet;
   const [tweets,setTweets]=useState([])
   const {getTweetComments}=TweetController()
+  const {update}=useContext(UpdateTweetContext)
+
 
 
   useEffect( ()=>{
@@ -20,7 +23,7 @@ const IndividualTweet = () => {
       setTweets(tweets)
     }
     fetchData();
-  },[])
+  },[update])
   
     return (
     <div className="border-custom-border-color border-[1px] w-full max-w-[41rem] h-screen border-b-0 ">

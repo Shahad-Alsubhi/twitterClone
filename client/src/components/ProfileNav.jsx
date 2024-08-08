@@ -8,34 +8,33 @@ import TweetContent from './tweetContent';
 import { UserContext } from '../context/userContext.jsx';
 import { LikedTweetsContext } from '../context/LikeTweetContext.jsx';
 import { useParams } from 'react-router-dom';
+import { UpdateTweetContext } from '../context/updateTweets.jsx';
 
 
 export default function ProfileNav() {
-  console.log("render")
   const {userId}=useParams()
   const [value, setValue] = useState(0);
   const {getUserTweets} =TweetController()
   const [tweets,setTweets]=useState([])
   const {likedTweets}=useContext(LikedTweetsContext)
   const {profileData,userId:Context_userId}=useContext(UserContext)
+  const {update}=useContext(UpdateTweetContext)
 
 
   
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   useEffect( ()=>{
     async function fetchData() {
-      if(value==0||value==1){
+      
       const tweets= await getUserTweets(userId)
-      setTweets(tweets)
-    }
+      setTweets(tweets)    
     }
     fetchData();
 
-  },[value,profileData,userId])
+  },[update,profileData,userId])
   
   useEffect(()=>{
     setValue(0)

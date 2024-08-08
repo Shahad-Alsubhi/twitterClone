@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import {UserContext} from "../context/userContext"
+import { UpdateTweetContext } from "../context/updateTweets";
+
 
 
 const TweetController = () => {
      const {userToken}=useContext(UserContext)
+     const {setUpdate}=useContext(UpdateTweetContext)
    
     const getAllTweets=async ()=>{
      const res= await fetch("https://twitterclone-wln9.onrender.com/tweets")
@@ -67,7 +70,7 @@ const TweetController = () => {
         parent_tweet       
       };
     
-     const res= await fetch("https://twitterclone-wln9.onrender.com/tweets/create-tweet",{
+      await fetch("https://twitterclone-wln9.onrender.com/tweets/create-tweet",{
         method:"post",
         headers:{
           "Content-Type": "application/json",
@@ -75,9 +78,7 @@ const TweetController = () => {
         },
         body:JSON.stringify(payload)
       })
-      console.log(await res.json())
-     
-
+      setUpdate(update=>!update)
     }
     
     const getTweetComments=async(tweetId)=>{
@@ -104,20 +105,14 @@ const TweetController = () => {
 
     }
 
-
-  
-  
-  
-  
-  
-  
   return {
     getAllTweets,
     getFollowingTweets,
     getUserTweets,
     getLikedTweets,
     addTweet,
-    getTweetComments,likeTweet
+    getTweetComments,likeTweet,
+    
   }
 }
 
