@@ -10,7 +10,6 @@ import { UserContext } from "../context/userContext";
 
 
 const ProfilePage = () => {
-   console.log("render profile")
   const {userId}=useParams()
   const {getProfileData,followUser}=UserController()
   const [profileData,setProfileData]=useState("")

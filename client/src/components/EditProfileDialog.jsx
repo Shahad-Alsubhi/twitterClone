@@ -14,9 +14,7 @@ const EditProfileDialog = () => {
     headerPicture:profileData.header_picture_url,
     profilePicture:profileData.profile_picture_url
   })
-
-
-
+  
   const [headerFile,setHeaderFile]=useState("")
   const [avatarFile,setAvatarFile]=useState("")
 
@@ -51,7 +49,6 @@ const EditProfileDialog = () => {
 
      else{
     const { name, value } = e.target;
-    console.log(name,value)
     setProfile((prevData) => ({
       ...prevData,
       [name]: value
