@@ -341,14 +341,14 @@ if (name) updateFields.name = name;
 if (header_picture_url) updateFields.header_picture_url = header_picture_url;
 
   await User.findByIdAndUpdate(req.user._id, { $set: updateFields})
-
+ 
   const token = jwt.sign({ userId: req.user._id,profileData:{
     username:req.user.username,
     joined_at:req.user.joined_at,
     name:name?name:req.user.name,
-    bio,
+    bio:bio?bio:"",
     header_picture_url:header_picture_url?header_picture_url:req.user.header_picture_url,
-    profile_picture_url:profile_picture_url?profile_picture_url:req.user.header_picture_url,
+    profile_picture_url:profile_picture_url?profile_picture_url:req.user.profile_picture_url,
   } }, process.env.SECRET, {
     expiresIn: "10h",
   });

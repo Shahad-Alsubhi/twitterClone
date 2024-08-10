@@ -4,7 +4,6 @@ import QuillPen from "../components/QuillPen"
 import SearchPage from './SearchPage'
 import { Outlet } from 'react-router-dom'
 import { SearchContext } from '../context/searchContext'
-import EditProfileDialog from '../components/EditProfileDialog'
 
 
 export default function HomePage(){
@@ -37,3 +36,4 @@ export default function HomePage(){
         
     )
 }
+
