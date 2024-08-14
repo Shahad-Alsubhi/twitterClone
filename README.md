@@ -38,7 +38,7 @@ Backend:
 
 
 ## UI
-<img src="https://github.com/user-attachments/assets/86daffac-d136-4a0a-9d3d-8732980556b0" alt="image" width="300">
+<img src="https://github.com/user-attachments/assets/86daffac-d136-4a0a-9d3d-8732980556b0" alt="image" width="300" hieght="500">
 <img src="https://github.com/user-attachments/assets/ed40af01-3f9c-4943-922a-ce752b6b19ec" alt="image" width="300">
 <img src="https://github.com/user-attachments/assets/a1f84e5f-c048-4eb5-86d6-dcc71a4708d3" alt="image" width="300">
 <img src="https://github.com/user-attachments/assets/df6197ff-533b-48db-94bb-d067f28d538a" alt="image" width="600">
