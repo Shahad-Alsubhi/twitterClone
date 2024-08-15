@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react"
 import AddComment from "./AddComment"
 import InteractionWithTweet from './InteractionWithTweet'
 import TweetContent from './tweetContent'
-import { TweetContext } from "../context/tweetContext"
 import { LikedTweetsContext } from "../context/LikeTweetContext"
 
 
@@ -10,7 +9,7 @@ import { LikedTweetsContext } from "../context/LikeTweetContext"
 const Tweet = ({style,individual,comment,tweet}) => {
   const {likedTweets}=useContext(LikedTweetsContext)
   
-  const liked=likedTweets.some((like)=> like.tweet._id==tweet._id)
+  const liked=likedTweets?likedTweets.some((like)=> like.tweet._id==tweet._id):false
   
 
 
